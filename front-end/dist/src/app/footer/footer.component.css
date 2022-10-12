@@ -1,0 +1,29 @@
+:host 
+
+.iconos{
+    margin: 5px;
+}
+
+.contenedor-iconos{
+    text-align: right;
+}
+
+.footer{
+    background-color:#a2d2ffff;
+    width: 100vw;
+    position:fixed;
+    left: 0;
+    bottom: 0;
+    padding:20px;
+}
+
+.links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 50px;
+
+}
+li>a{
+    width: max-content;
+}

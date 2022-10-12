@@ -1,0 +1,35 @@
+<h1 *ngIf="!esEditar">Registrar Organizacion</h1>
+<h1 *ngIf="esEditar">Editar Organizacion</h1>
+<form class="form-horizontal"
+[formGroup]="organizacionForm"
+(ngSubmit)="guardar()" >
+<fieldset>
+    <div class="form-group" [ngClass]="{'has-error': ( organizacionForm.get('nombreFormControl')?.touched || organizacionForm.get('nombreFormControl')?.dirty  && !organizacionForm.get('nombreFormControl').valid )}">
+      <label for="nombre">Nombre</label>
+      <input [(ngModel)]="nombre" id="nombre" class="form-control" type="text" required formControlName="nombreFormControl" >
+      <span class="help-block"
+      *ngIf="( organizacionForm.get('nombreFormControl')?.touched
+      || organizacionForm.get('nombreFormControl')?.dirty
+      && !organizacionForm.get('nombreFormControl')?.valid )">
+      <span *ngIf="organizacionForm.get('nombreFormControl')?.errors?.required"> Requerido </span>
+      </span>
+    </div>
+    <div class="form-group" [ngClass]="{'has-error': ( organizacionForm.get('descripcionFormControl')?.touched || organizacionForm.get('descripcionFormControl')?.dirty  && !organizacionForm.get('descripcionFormControl').valid )}">
+      <label for="descripcion">Descripcion</label>
+      <input [(ngModel)]="descripcion" id="descripcion" class="form-control" type="text" required formControlName="descripcionFormControl" >
+      <span class="help-block"
+      *ngIf="( organizacionForm.get('descripcionFormControl')?.touched
+      || organizacionForm.get('descripcionFormControl')?.dirty
+      && !organizacionForm.get('descripcionFormControl')?.valid )">
+      <span *ngIf="organizacionForm.get('descripcionFormControl')?.errors?.required"> Requerido </span>
+      </span>
+    </div>
+    <div class="form-group">
+        <label for="contactoId">Contacto</label>
+        <select [value]="contactoId" [(ngModel)]="contactoId" formControlName="contactoFormControl" required  class="form-control" id="contactoId">
+        <option *ngFor="let contacto of contactos"  type="number" [value]="contacto.id">{{contacto.nombre + " " + contacto.apellido}}</option>
+        </select>
+    </div>
+</fieldset>
+<button class="btn btn-primary" type="submit">Guardar</button>
+</form>

@@ -1,0 +1,22 @@
+<div class="float-md-right">
+    <button  [routerLink]='["/organizacion-crear"]' class="btn btn-success" style="margin-bottom: 30px;">
+     Registrar Organizacion
+    </button>
+</div>
+<table class="table" >
+<tr>
+    <td>Nombre</td>
+    <td>Descripcion</td>
+    <td>Contacto</td>
+    <td>Acciones</td>
+</tr>
+<tr  *ngFor="let organizacion of organizaciones" >
+    <td>{{ organizacion.nombre }}</td>
+    <td>{{ organizacion.descripcion}}</td>
+    <td>{{ organizacion?.contacto?.nombre + ' '+ organizacion?.contacto?.apellido}}</td>
+    <td>
+        <button class="btn btn-primary" [routerLink]='["/organizacion/" +  organizacion.id  ]'>Editar</button>
+        <button class="btn btn-danger" (click)="borrar(organizacion.id)">Eliminar</button>
+    </td>
+</tr>
+</table>

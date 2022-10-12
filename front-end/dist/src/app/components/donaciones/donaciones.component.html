@@ -1,0 +1,19 @@
+<div class="float-md-right">
+    <button  [routerLink]='["/donacion-solicitud-crear"]' class="btn btn-success" style="margin-bottom: 30px;">
+     Lista de Donaciones
+    </button>
+</div>
+<table class="table" >
+<tr>
+    <td>Donacion Solicitud ID</td>
+    <td>Observaciones</td>
+    <td>Donante</td>
+    <td>Cantidad Donada</td>
+</tr>
+<tr  *ngFor="let donacion of donaciones" >
+    <td>{{ donacion.donacionSolicitudId }}</td>
+    <td>{{ donacion.observacion }}</td>
+    <td>{{ donacion.donante.nombre + " " + donacion.donante.apellido }}</td>
+    <td>{{ donacion.cantidad }}</td>
+</tr>
+</table>

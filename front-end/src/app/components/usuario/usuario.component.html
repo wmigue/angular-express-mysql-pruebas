@@ -1,0 +1,37 @@
+<div class="contenedor_btn">
+    <button id="btn_donante" type="button" class="btn btn-secondary" (click)="abrirModal()">  Agregar Donante</button>
+</div>
+
+
+<div *ngIf="modalswitch == true">
+    <app-add-usuario></app-add-usuario>
+</div>
+
+<table class="table table-responsive table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th> Mail</th>
+        <th>Taller</th>
+        <th> Fecha de Creación</th>
+        <th> Estado</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let x of usuarios">
+        <td>{{ x.id }}</td>
+        <td>{{ x.nombre }}</td>
+        <td>{{ x.apellido}}</td>
+        <td>{{ x.mail}}</td>
+        <td>{{ x.taller}}</td>
+        <td>{{ x.created_at}} </td>
+        <td>{{ x.estado}} </td>
+        <td>
+            <!--   <button class="btn btn-primary" [routerLink]='["/usuarios/" +  x.id  ]'>Editar</button> -->
+            <div *ngIf="x.password !== 'nerd'">
+                <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"(click)="habilitarUsuario(x.id)">Habilitar</button>
+                <button id="btn_eliminar" type="button" class="btn btn-primary btn-sm"(click)="deleteUsuario(x.id)">Eliminar</button>
+            </div>
+        </td>
+    </tr>
+</table>

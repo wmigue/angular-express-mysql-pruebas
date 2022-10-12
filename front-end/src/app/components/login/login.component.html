@@ -1,0 +1,38 @@
+<div class="cuerpo">
+
+    <div class="container login-container">
+
+        <div class="row" *ngIf="!encontrado; else bloqueEncontrado">
+            <div class="col-md-6 login-form-1">
+                <h4 class="titulo">Iniciar sesión </h4>
+                <form>
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input type="text" class="form-control" placeholder="Email" name="mail" id="mail" value="" [(ngModel)]="mail" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="pass">Contraseña </label>
+                        <input type="password" class="form-control" placeholder="Contraseña" name="pass" id="pass" value="" [(ngModel)]="pass" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="contenedor">
+                            <input type="submit" class="btnSubmit" value="Login" (click)="logarse(pass, mail)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <ng-template #bloqueEncontrado>
+            <h4>BIENVENIDO!</h4>
+            <p> HOLA, mail: {{mail}} </p>
+            <p> Tu taller seleccionado es: {{usuario.taller}} </p>
+        </ng-template>
+
+
+    </div>

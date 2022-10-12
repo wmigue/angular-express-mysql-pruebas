@@ -1,0 +1,35 @@
+.contenedor_btn{
+    text-align: center;
+}
+
+#btn_donante{
+    background-color:#905aafff;
+    border: none;
+    margin-bottom: 15px;
+ 
+}
+#btn_donante:hover{
+    background-color: #dac8e4ff;
+    color: black;
+} 
+.table{
+    box-shadow: 2px 2px 5px #999;
+}
+th{
+    text-align: center;
+    background-color:#cdb4dbff;
+}
+td{
+    
+    text-align: center;
+    font-weight:lighter;
+}
+#btn_eliminar{
+  background-color: #8f0034ff;
+  border: none;
+ 
+}
+#btn_eliminar:hover{
+    background-color: #ff85b1ff;
+    color: black;
+}
