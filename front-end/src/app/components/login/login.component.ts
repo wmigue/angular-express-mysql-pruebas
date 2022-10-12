@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   mail: string
   pass: string
   usuario: Usuario
+  data: any = {}
 
   constructor(private usuarioService: UsuariosService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -28,13 +29,13 @@ export class LoginComponent implements OnInit {
       .subscribe(
         res => {
           //console.log(res.user[0])
-          res.user.length > 0 && res.user[0].estado=='habilitado' ? (
+          this.data = res
+          this.data.user.length > 0 && this.data.user[0].estado == 'habilitado' ? (
             this.encontrado = true,
-            this.usuario=res.user[0]
+            this.usuario = this.data.user[0]
           ) : (
             false
           )
-
         },
         err => console.error(err)
       )
