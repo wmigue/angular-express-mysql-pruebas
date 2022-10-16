@@ -12,7 +12,10 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class RegistroAlumnosComponent implements OnInit {
 
   @HostBinding('class') clases = 'row';
-  
+
+  res: any = {}
+  errores: Object = { msg: '', param: '' }
+  registrado: boolean
   usuario: Usuario = {
     id: 0,
     nombre: '',
@@ -22,10 +25,10 @@ export class RegistroAlumnosComponent implements OnInit {
     mail: '',
     created_at: new Date(),
     estado: 'no habilitado',
-    taller:''
+    taller: ''
   }
 
-  registrado: boolean
+
 
 
   constructor(private usuarioService: UsuariosService, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -33,17 +36,25 @@ export class RegistroAlumnosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.registrado=false
+    this.registrado = false
   }
 
   saveUsuario() {
     this.usuarioService.guardarUsuario(this.usuario)
       .subscribe(
         res => {
-          console.log(res)
-          this.registrado=true
+          //console.log(res)
+          this.res = res
+          //error que viene de usuarioController en la propiedad error=1 osea, ese usuario ya existe en la base de datos.
+          !this.res.error ? this.registrado = true : this.errores = [{ msg: this.res.message, param: this.res.status }]
         },
-        err => console.error(err)
+        err => {
+          //express-validator se ejecuta aca (validaciones en el backend de los campos que le mandamos desde el body del frontend)
+          this.errores = err.error.errors
+          for (let e of err.error.errors) {
+            console.log(e)
+          }
+        }
       )
   }
 

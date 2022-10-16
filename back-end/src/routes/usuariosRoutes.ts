@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-
 import usuariosController from '../controllers/usuariosController';
-
-class GameRoutes {
+const { validateCreate } = require('../validators/usuarios')
+    
+class UsuariosRoutes {
 
     router: Router = Router();
 
@@ -13,7 +13,7 @@ class GameRoutes {
     config() {
         this.router.get('/', usuariosController.list);
         this.router.delete('/:id', usuariosController.delete);
-        this.router.post('/', usuariosController.create);
+        this.router.post('/',validateCreate, usuariosController.create);
         this.router.post ('/updateEstado/', usuariosController.update);
         this.router.post ('/signin/', usuariosController.logarse);
 
@@ -27,5 +27,5 @@ class GameRoutes {
 
 }
 
-export default new GameRoutes().router;
+export default new UsuariosRoutes().router;
 

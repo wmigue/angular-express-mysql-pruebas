@@ -1,7 +1,11 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express'
+const express = require('express')
+const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
+const { isAuthenticated } = require('../middlewares/auth')
+const { signToken } = require('../helpers/signToken')
 
-
-import pool from '../database';
+import pool from '../database'
 
 class UsuariosController {
 
@@ -12,16 +16,29 @@ class UsuariosController {
 
     public async delete(req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        const p="nerd";
+        //const p="nerd";
         await pool.query('DELETE FROM usuario WHERE id = ? ', [id]);
         res.json({ message: "The usuario se eliminó" });
     }
 
+
     public async create(req: Request, res: Response): Promise<void> {
-        const result = await pool.query('INSERT INTO usuario set ?', [req.body]);
-        console.log(req.body);
-        res.json({ message: 'usuario guardado' });
+        const { mail } = req.body
+        let findOne = await pool.query('SELECT * FROM usuario WHERE mail = ? ', [mail])
+        findOne.length >= 1 ? (
+            res.json({ message: 'ese usuario ya existe', error: 1, status: 403 })
+        ) : (
+            findOne = await pool.query('INSERT INTO usuario set ?', [req.body]),
+            res.json({ message: 'usuario guardado', error: 0, status: 201})
+        )
     }
+
+
+
+
+
+
+
 
     public async update(req: Request, res: Response): Promise<void> {
         const { id } = req.body;
@@ -29,32 +46,32 @@ class UsuariosController {
         res.json({ message: 'usuario PATCHADO' });
     }
 
-    
+
     public async logarse(req: Request, res: Response): Promise<void> {
         const { mail, pass } = req.body;
         const buscado = await pool.query('SELECT * FROM usuario where password = ? AND mail = ?', [pass, mail]);
-        res.json({ user: buscado});
+        res.json({ user: buscado });
     }
 
 
-   /*  public async getOne(req: Request, res: Response): Promise<any> {
-        const { id } = req.params;
-        const games = await pool.query('SELECT * FROM games WHERE id = ?', [id]);
-        console.log(games.length);
-        if (games.length > 0) {
-            return res.json(games[0]);
-        }
-        res.status(404).json({ text: "The game doesn't exits" });
-    }
-
-
-
-    public async update(req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        const oldGame = req.body;
-        await pool.query('UPDATE games set ? WHERE id = ?', [req.body, id]);
-        res.json({ message: "The game was Updated" });
-    } */
+    /*  public async getOne(req: Request, res: Response): Promise<any> {
+         const { id } = req.params;
+         const games = await pool.query('SELECT * FROM games WHERE id = ?', [id]);
+         console.log(games.length);
+         if (games.length > 0) {
+             return res.json(games[0]);
+         }
+         res.status(404).json({ text: "The game doesn't exits" });
+     }
+ 
+ 
+ 
+     public async update(req: Request, res: Response): Promise<void> {
+         const { id } = req.params;
+         const oldGame = req.body;
+         await pool.query('UPDATE games set ? WHERE id = ?', [req.body, id]);
+         res.json({ message: "The game was Updated" });
+     } */
 
 
 }
