@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { UsuariosService } from './services/usuarios.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { OrganizacionFormComponent } from './components/organizacion/organizacion-form/organizacion-form.component';
 import { OrganizacionComponent } from './components/organizacion/organizacion.component';
@@ -19,20 +19,22 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminComponentComponent } from './components/admin-component/admin-component.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroAlumnosComponent } from './components/registro-alumnos/registro-alumnos.component';
+import { MiTallerComponent } from './components/login/mi-taller/mi-taller.component';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-/*     DonacionSolicitudFormComponent,
-    DonacionSolicitudComponent, */
+    /*     DonacionSolicitudFormComponent,
+        DonacionSolicitudComponent, */
     UsuarioComponent,
-/*     UsuarioFormComponent,
-   
-    DonarSolicitudFormComponent,
-    
-    DonacionComponent, */
+    /*     UsuarioFormComponent,
+       
+        DonarSolicitudFormComponent,
+        
+        DonacionComponent, */
     OrganizacionFormComponent,
     OrganizacionComponent,
     HomeComponent,
@@ -42,8 +44,9 @@ import { RegistroAlumnosComponent } from './components/registro-alumnos/registro
     AdminComponentComponent,
     LoginComponent,
     RegistroAlumnosComponent,
+    MiTallerComponent,
 
-  
+
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -53,7 +56,12 @@ import { RegistroAlumnosComponent } from './components/registro-alumnos/registro
     FormsModule,
     HttpClientModule,
   ],
-  providers: [UsuariosService],
+  providers: [
+    UsuariosService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

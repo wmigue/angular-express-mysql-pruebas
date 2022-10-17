@@ -9,6 +9,8 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AdminComponentComponent } from './components/admin-component/admin-component.component';
 import { RegistroAlumnosComponent } from './components/registro-alumnos/registro-alumnos.component';
 import { LoginComponent } from './components/login/login.component';
+import { MiTallerComponent } from './components/login/mi-taller/mi-taller.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +45,10 @@ const routes: Routes = [
   {
     path:'login',
     component:LoginComponent
+  },
+  {
+    path:'mitaller',
+    component:MiTallerComponent
   }
   /*   { path: 'usuario/:id', component: UsuarioFormComponent },
     { path: 'usuario-crear', component: UsuarioFormComponent },

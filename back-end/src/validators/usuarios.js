@@ -1,7 +1,7 @@
 const { check } = require('express-validator');
 //import validateResult from '../helpers/validateHelper'
 const { validateResult } = require('../helpers/validateHelper')
-
+/////
 const validateCreate = [
     check('nombre')
         .exists()

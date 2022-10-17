@@ -1,8 +1,7 @@
 <div class="cuerpo">
 
     <div class="container login-container">
-
-        <div class="row" *ngIf="!encontrado; else bloqueEncontrado">
+        <div class="row" >
             <div class="col-md-6 login-form-1">
                 <h4 class="titulo">Iniciar sesión </h4>
                 <form>
@@ -25,14 +24,14 @@
                     <div class="form-group">
                     </div>
                 </form>
+
+                <p class="text-danger text-center" *ngIf="errores == true">
+                    Password / usuario Incorrecto. {{data.status}}
+                </p>
             </div>
         </div>
 
-        <ng-template #bloqueEncontrado>
-            <h4>BIENVENIDO!</h4>
-            <p> HOLA, mail: {{mail}} </p>
-            <p> Tu taller seleccionado es: {{usuario.taller}} </p>
-        </ng-template>
+        
 
 
     </div>

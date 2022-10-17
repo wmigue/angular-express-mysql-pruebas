@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "servidor",
   "scripts": {
+    "copyothersfiles": "copyfiles -u 2 src/validators/*.js build/validators && copyfiles -u 2 src/middlewares/*.js build/middlewares && copyfiles -u 2 src/helpers/*.js build/helpers",
     "build": "tsc",
     "watch": "tsc -w",
     "dev": "nodemon build/index.js"

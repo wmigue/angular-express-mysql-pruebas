@@ -1,20 +1,29 @@
 const jwt = require('jsonwebtoken')
-import pool from '../database'
+const pool = require('../database')
 
 //middleware para saber si tiene token activo.
 const isAuthenticated = (req, res, next) => {
-    const token = req.headers.authorization
-    if (!token) {
-        return res.sendStatus(403)
-    }
-    jwt.verify(token, 'aleatorio', async (err, decoded) => {
-        const { id } = decoded
-        let findOne = await pool.query('SELECT * FROM usuario WHERE id = ? ', [id])
-        req.user_buscado = findOne
-        next()
-    })
-}
+    try {
+        if (!req.headers.authorization) {
+            return res.status(401).send('Unauhtorized Request')
+        }
+        let token = req.headers.authorization
 
+        if (token === 'null') {
+            return res.status(401).send('Unauhtorized Request')
+        }
+
+        jwt.verify(token, 'secretkey', (err, decoded) => {
+            const { id } = decoded
+            console.log("this is the id decodificado: " + id)
+            req.userId = id
+            next()
+        })
+    } catch (e) {
+        //console.log(e)
+        return res.status(401).send('Unauhtorized Request');
+    }
+}
 
 
 

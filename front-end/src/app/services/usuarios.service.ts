@@ -32,6 +32,12 @@ export class UsuariosService {
     return this.http.post(`${this.API_URI}/usuarios/signin/`,{pass, mail});
   }
 
+  misTalleres() {
+    return this.http.get(`${this.API_URI}/usuarios/mitaller/`);
+  }
+
+ 
+
 
 
 

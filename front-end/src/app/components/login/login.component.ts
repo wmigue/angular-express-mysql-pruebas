@@ -11,33 +11,37 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class LoginComponent implements OnInit {
 
-  encontrado: boolean
+  // encontrado: boolean
   mail: string
   pass: string
   usuario: Usuario
+
+  errores: boolean = false
+
   data: any = {}
 
   constructor(private usuarioService: UsuariosService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit() {
-    this.encontrado = false
+
   }
 
   logarse(pass: string, mail: string) {
     this.usuarioService.sigIn(pass, mail)
       .subscribe(
         res => {
-          //console.log(res.user[0])
           this.data = res
-          this.data.user.length > 0 && this.data.user[0].estado == 'habilitado' ? (
-            this.encontrado = true,
-            this.usuario = this.data.user[0]
-          ) : (
-            false
-          )
+          if(this.data.error==1){
+            this.errores=true
+          }else{
+            localStorage.setItem('token', this.data.token)
+            this.router.navigate(['/mitaller'])
+          }
         },
-        err => console.error(err)
+        err => {
+         console.error(err)
+        }
       )
   }
 

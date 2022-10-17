@@ -1,11 +1,15 @@
 import { Request, Response } from 'express'
+import { token } from 'morgan'
 const express = require('express')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
-const { isAuthenticated } = require('../middlewares/auth')
 const { signToken } = require('../helpers/signToken')
 
 import pool from '../database'
+
+export interface IGetUserAuthInfoRequest extends Request {
+    userId: string // or any other type
+}
 
 class UsuariosController {
 
@@ -29,14 +33,9 @@ class UsuariosController {
             res.json({ message: 'ese usuario ya existe', error: 1, status: 403 })
         ) : (
             findOne = await pool.query('INSERT INTO usuario set ?', [req.body]),
-            res.json({ message: 'usuario guardado', error: 0, status: 201})
+            res.json({ message: 'usuario guardado', error: 0, status: 201 })
         )
     }
-
-
-
-
-
 
 
 
@@ -48,10 +47,26 @@ class UsuariosController {
 
 
     public async logarse(req: Request, res: Response): Promise<void> {
-        const { mail, pass } = req.body;
-        const buscado = await pool.query('SELECT * FROM usuario where password = ? AND mail = ?', [pass, mail]);
-        res.json({ user: buscado });
+        const { mail, pass } = req.body
+        const buscado = await pool.query('SELECT * FROM usuario where password = ? AND mail = ?', [pass, mail])
+        // console.log(JSON.stringify(buscado[0]))
+        if (buscado.length > 0) {
+            const token = signToken(buscado[0].id) //genero la llave.
+            res.json({ token: token })
+        }else{
+            res.json({ error: 1, status: 404 })
+        }
+
     }
+
+
+    public async gettalleres(req: IGetUserAuthInfoRequest, res: Response): Promise<void> {
+        const id = req.userId //viene del middleware isAutenticated
+        const buscado = await pool.query('SELECT nombre, apellido, taller FROM usuario where id = ?', [id])
+        res.json({ usuario: buscado })
+    }
+
+
 
 
     /*  public async getOne(req: Request, res: Response): Promise<any> {
