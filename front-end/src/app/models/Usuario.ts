@@ -9,6 +9,7 @@ export interface Usuario {
     created_at?: Date
     estado?: string
     taller: string
+    ter?:boolean
 };
 
 

@@ -51,18 +51,19 @@ class UsuariosController {
         const buscado = await pool.query('SELECT * FROM usuario where password = ? AND mail = ?', [pass, mail])
         // console.log(JSON.stringify(buscado[0]))
         if (buscado.length > 0) {
-            const token = signToken(buscado[0].id) //genero la llave.
-            res.json({ token: token })
-        }else{
+            const token = signToken(buscado[0].id, buscado[0].role) //genero token.
+            res.json({ token: token, rol: buscado[0].role })
+        } else {
             res.json({ error: 1, status: 404 })
         }
 
     }
 
 
-    public async gettalleres(req: IGetUserAuthInfoRequest, res: Response): Promise<void> {
+    public async miInformacion(req: IGetUserAuthInfoRequest, res: Response): Promise<void> {
         const id = req.userId //viene del middleware isAutenticated
-        const buscado = await pool.query('SELECT nombre, apellido, taller FROM usuario where id = ?', [id])
+        const buscado = await pool.query('SELECT nombre, apellido, estado, taller, role FROM usuario where id = ?', [id])
+        // console.log(JSON.stringify(buscado)) //convierto raw to json  
         res.json({ usuario: buscado })
     }
 

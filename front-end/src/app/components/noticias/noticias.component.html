@@ -1,0 +1,85 @@
+<!-- <pre>
+{{ noticias | json}}
+</pre> -->
+
+<div class="row mt-3">
+ <!--    <button type="button" class="btn btn-primary btn-sm" (click)="actualizar()">
+        RECARGAR
+    </button> -->
+
+    <h1 *ngIf="error">ERROR DE LA API, REVISE LA CONSOLA.</h1>
+
+    <ng-container *ngIf="!error">
+        <h3 class="col" *ngIf="loading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            ESPERANDO A LA API...
+        </h3>
+
+        <h3 class="col" *ngIf="!loading">
+
+
+            <div class="input-group col-5 mt-1">
+                <div class="input-group-prepend">
+                   
+                </div>
+                <input type="text" [(ngModel)]="buscarTexto" (ngModelChange)="filtrar()" class="form-control mr-2 m-2"
+                    placeholder="Ejemplo: guerra ucrania" />
+                <div class="input-group-append">
+                    <span class="input-group-text animate__animated animate__fadeInLeft animate__faster"
+                        *ngIf="buscarTexto">Encontradas: {{noticiasFiltradas.length}}</span>
+                </div>
+            </div>
+        </h3>
+
+        <div class="form-group m-2">
+            <label for="formControlRange">Mostrar las últimas {{cantidadMostrada}}</label>
+            <div>
+                <input type="range" class="form-control-range" [attr.disabled]="loading?true:null"
+                [(ngModel)]="cantidadMostrada" (change)="validarCantidad($event)" />
+            </div>
+          
+        </div>
+
+        <div *ngIf="noticias">
+            <!-- <p *ngFor="let noticia of noticias; index as i" class="p-0 pt-1 m-0">
+				<small class="text-info"> N° {{(i+1).toString().padStart(3,'0')}} )</small>
+				<code title="Última actualización de la noticia">【 {{noticia.last_updated_date | date:"MMM d 🡆 hh:mm:ss"}} 】 </code>
+				🙶
+				<small class="text-warning" [title]="noticia.description?.basic.toUpperCase()">
+          <a [href]="URL_BASE + noticia.website_url" target="_blank" rel="noopener noreferrer">{{noticia.headlines.basic }}</a>
+          </small>
+				🙷
+			</p> -->
+
+            <div class="row mt-4">
+                <div class="card-columns">
+                    <div class="card animate__animated animate__zoomIn animate__fast"
+                        *ngFor="let noticia of noticiasFiltradas; let i = index; trackBy:trackNoticias">
+
+
+                        <div class="card-body">
+                            <h5 class="card-title text-warning" [innerHtml]="getTitular(noticia, i)"></h5>
+                            <p class="card-text text-justify">
+                                {{noticia.description.basic}}
+                                <a [href]="URL_BASE + noticia.website_url" target="_blank" rel="noopener noreferrer"
+                                    class="card-link">Abrir</a>
+                            </p>
+                        </div>
+                        <div class="card-footer py-1 text-right">
+                            <small class="text-light">Última actualización → {{noticia.last_updated_date |
+                                date:'short'}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- RAW DATA
+
+			<pre>{{ noticias | json}}</pre> -->
+        </div>
+    </ng-container>
+</div>

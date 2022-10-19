@@ -1,0 +1,26 @@
+.comentario{
+    color:black;
+    font-weight: bolder;
+    text-align: right;
+    font-size: larger;
+    margin: 0%;
+    padding: -15px;
+}
+
+.titulo{
+    color:black;
+    font-weight: bolder;
+    font-size: x-large;
+    text-align: right;
+    margin: 0%;
+}
+.historia{
+    text-indent: 40px;
+    margin-top: 80px;
+    margin-bottom: 200px;
+}
+
+h3{
+    margin-top: 50px;
+    color: #905aafff;
+}

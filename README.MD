@@ -1,4 +1,6 @@
 # COMANDOS
+
+
 //////////////////////////////
 
 Para frontend:
@@ -30,9 +32,11 @@ ACLARACION: abrir 2 consolas diferentes, y ejecutar los comandos del front en un
 
 # NOTAS
 
-auth-interceptor.service: inyecta en el req.header.autorization el token (si lo hubiera) en cada request / response de tipo http, para no tener que enviarlo manualmente.
+auth-interceptor.service: inyecta en el req.header.autorization el token generado con JWT (si lo hubiera) en cada request / response de tipo http, para no tener que enviarlo manualmente en cada peticion. con esto podemos proteger rutas usando un middleware que esta controlando si ese token es valido, si lo es, te deja pasar a determinada ruta.
 
-dentro de la carpeta backend/src/validators usamos express-validator que es una extension para validar en el lado del backend todo lo que recibimos en el body desde el front-end.
+dentro de la carpeta backend/src/validators usamos express-validator que es una extension para validar en el lado del backend todo lo que recibimos en el body desde el front-end. por ejemplo, que un apellido tenga como minimo 6 caracteres y no sea nulo.
+
+dentro de la carpeta backend/src/middlwares tenemos una funcion que usamos en la las routes para validar que el usuario tenga activo un JWT o token. tambien tenemos otra funcion hasRole que valida el rol del usuario, por ahora tenemos definido que si es admin va a dicha seccion, sino va a talleres. el rol lo trae de la base de datos.
 
 con npm run copyothersfiles copiamos algunos archivos que no se copian con el comando npm run build (este solo copia *.ts)
 

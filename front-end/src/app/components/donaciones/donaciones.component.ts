@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IDonacion } from 'src/app/models/donacion';
-import { DonacionService } from 'src/app/services/donacion.service';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { DonacionAnonima } from 'src/app/models/donacionAnonima';
+import AnonimoService from 'src/app/services/anonimos.service';
+
 
 @Component({
   selector: 'app-donacion-solicitud',
@@ -8,14 +9,26 @@ import { DonacionService } from 'src/app/services/donacion.service';
   styleUrls: ['./donaciones.component.css']
 })
 export class DonacionComponent implements OnInit {
-  public donaciones: IDonacion[];
 
-  constructor(private donacionService: DonacionService) {
+  @HostBinding('class') clases = 'row';
+
+  public donaciones: any
+
+  constructor(private anonimoService: AnonimoService) {
   }
 
   ngOnInit() {
-    this.donacionService.getAll().subscribe(datos =>{
-      this.donaciones = datos;
-    });
+    this.todas()
+  }
+
+
+  todas(): void {
+    this.anonimoService.getAnonimos()
+      .subscribe(datos => {
+        console.log(datos)
+        this.donaciones = datos
+      },
+        err => console.log(err)
+      )
   }
 }

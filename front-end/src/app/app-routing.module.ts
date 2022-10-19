@@ -10,6 +10,9 @@ import { AdminComponentComponent } from './components/admin-component/admin-comp
 import { RegistroAlumnosComponent } from './components/registro-alumnos/registro-alumnos.component';
 import { LoginComponent } from './components/login/login.component';
 import { MiTallerComponent } from './components/login/mi-taller/mi-taller.component';
+import { ErroresComponent } from './components/errores/errores.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { QuinesSomosComponent } from './components/quines-somos/quines-somos.component';
 
 const routes: Routes = [
   {
@@ -28,6 +31,22 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponentComponent
+  },
+  {
+    path: 'noticias',
+    component: NoticiasComponent
+  },
+  {
+    path: 'donaciones',
+    component: DonacionComponent
+  },
+  {
+    path: 'quienes-somos',
+    component: QuinesSomosComponent
+  },
+  {
+    path: 'errores/:mensaje',
+    component: ErroresComponent
   },
   {
     path: 'usuarios',

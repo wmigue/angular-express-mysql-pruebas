@@ -12,16 +12,16 @@
     <div class="collapse navbar-collapse " id="navbarNav">
       <ul class="navbar-nav links">
         <li class="nav-item">
-          <a class="nav-link" href="/donacion-solicitud">Donaciones</a>
+          <a class="nav-link" href="/donaciones">Donaciones Anonimas</a>
         </li>
-        <li class="nav-item">
+     <!--    <li class="nav-item">
           <a class="nav-link" href="/organizaciones">Organizaciones</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link " href="/noticias">Noticias</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">Noticias</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#"> Sobre Nosotros</a>
+          <a class="nav-link " href="/quienes-somos"> Sobre Nosotros</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="/mitaller"> Mi taller</a>
@@ -32,9 +32,52 @@
         <li class="nav-item">
           <b><a class="nav-link " href="/admin"> Admin</a></b>
         </li>
+        <li>
+          <div class="donaciones">
+            <img id="btnDonar2" src="../../../assets/imagnes/DONAR AQUI.jpg" (click)="openCentrado(contenido)">
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
+
+
+
+  <ng-template #contenido let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title">Donacion Anonima</h2>
+      <button class="btns2" aria-label="close" type="button" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" *ngIf="!sedono; else gracias">
+      <select class="form-select mb-5" aria-label="Default select example" [(ngModel)]="donacionAnonima.causa">
+        <option selected disabled>CAUSA</option>
+        <option value="Niños Africa">Niños Africa</option>
+        <option value="Residentes Ucrania">Residentes Ucrania</option>
+        <option value="Fundación Cancer" >Fundación Cancer</option>
+      </select>
+      <select class="form-select mb-5" aria-label="Default select example" [(ngModel)]="donacionAnonima.importe">
+        <option disabled selected  >IMPORTE</option>
+        <option value="100">$100</option>
+        <option value="200">$200</option>
+        <option value="500">$500</option>
+      </select>
+      <div class="modal-footer">
+        <button type="button" class="btns" (click)="donar(donacionAnonima)">Donar</button>
+      </div>
+    </div>
+
+  </ng-template>
+
+
+  <ng-template #gracias>
+    <div class="p-4">
+      ✔ donacion exitosa.
+    </div>
+  </ng-template>
+
+
 
   <div class="container mt-3">
     <router-outlet></router-outlet>

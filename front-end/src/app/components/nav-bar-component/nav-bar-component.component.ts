@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DonacionAnonima } from 'src/app/models/donacionAnonima';
+import AnonimoService from 'src/app/services/anonimos.service';
+import { DonacionComponent } from '../donaciones/donaciones.component';
 
 @Component({
   selector: 'app-nav-bar-component',
@@ -7,9 +12,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponentComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  sedono: boolean
+  donacionAnonima: DonacionAnonima = {
+    fecha: new Date(),
+    importe: 0,
+    causa: '',
   }
 
+  constructor(private modal: NgbModal, private anonimoService: AnonimoService, private router: Router) { }
+
+  ngOnInit() {
+    this.sedono = false
+  }
+
+  openCentrado(contenido): void {
+    this.modal.open(contenido, { centered: true })
+  }
+
+
+
+  donar(donacion: DonacionAnonima): void {
+    this.sedono = true
+    this.anonimoService.donarAnonimo(donacion)
+      .subscribe(
+        res => {
+          console.log(res)
+          //recargando web al guardar nueva donacion
+          this.router.navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['donaciones']);
+            })
+
+        },
+        err => {
+          console.error(err)
+        }
+
+      )
+  }
+
+
+
+  close(): void {
+    this.modal.dismissAll()
+    this.sedono = false
+  }
+
+
+
+
 }
+
+

@@ -14,8 +14,9 @@ const isAuthenticated = (req, res, next) => {
         }
 
         jwt.verify(token, 'secretkey', (err, decoded) => {
-            const { id } = decoded
-            console.log("this is the id decodificado: " + id)
+            const { id, role } = decoded
+            //console.log("id del usuario decodificado: " + id)
+            req.rol = role
             req.userId = id
             next()
         })
@@ -26,5 +27,14 @@ const isAuthenticated = (req, res, next) => {
 }
 
 
+//middleware para identificar que rol tiene el usuario que hace el request.
+const hasRole = role => (req, res, next) => {
+    if (req.rol === role) { 
+        return next()
+    }
+    return res.status(401).send({ noHayRol: '!! No tenes el ROL requerido para ingresar al sistema .' })
+}
 
-module.exports = { isAuthenticated }
+
+
+module.exports = { isAuthenticated, hasRole }

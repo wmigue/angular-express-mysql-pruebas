@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, HostBinding } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/Usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -17,7 +19,7 @@ export class UsuarioComponent implements OnInit {
 
   modalswitch: boolean
 
-  constructor(private usuarioService: UsuariosService) {
+  constructor(private router: Router, private usuarioService: UsuariosService) {
 
   }
 
@@ -33,7 +35,13 @@ export class UsuarioComponent implements OnInit {
           this.usuarios = res;
           console.log(res);
         },
-        err => console.error(err)
+        err => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 401) {
+              this.router.navigate(['/errores', 'no tienes el rol de ADMIN para ver la ruta que pretendes acceder.']) // si no tiene el rol admin, navega a errores
+            }
+          }
+        }
       );
   }
 

@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import usuariosRoutes from './routes/usuariosRoutes';
+import talleresRoutes from './routes/talleresRoutes';
+import anonimosRoutes from './routes/anonimosRoutes';
 
 class Server {
 
@@ -25,11 +27,13 @@ class Server {
 
     routes(): void {
         this.app.use('/api/usuarios', usuariosRoutes);
+        this.app.use('/api/talleres', talleresRoutes);
+        this.app.use('/api/anonimos', anonimosRoutes); 
     }
 
     start() {
         this.app.listen(this.app.get('port'), () => {
-            console.log('Server on port', this.app.get('port'));
+            console.log('Servidor escuchando en puerto -> ', this.app.get('port'));
         });
     }
 

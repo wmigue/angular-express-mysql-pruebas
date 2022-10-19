@@ -21,20 +21,20 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroAlumnosComponent } from './components/registro-alumnos/registro-alumnos.component';
 import { MiTallerComponent } from './components/login/mi-taller/mi-taller.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
-
+import { ErroresComponent } from './components/errores/errores.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { QuinesSomosComponent } from './components/quines-somos/quines-somos.component';
+import { TalleresService } from './services/talleres.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import AnonimoService from './services/anonimos.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    /*     DonacionSolicitudFormComponent,
-        DonacionSolicitudComponent, */
+    QuinesSomosComponent,
     UsuarioComponent,
-    /*     UsuarioFormComponent,
-       
-        DonarSolicitudFormComponent,
-        
-        DonacionComponent, */
     OrganizacionFormComponent,
     OrganizacionComponent,
     HomeComponent,
@@ -45,8 +45,18 @@ import { AuthInterceptorService } from './auth-interceptor.service';
     LoginComponent,
     RegistroAlumnosComponent,
     MiTallerComponent,
+    ErroresComponent,
+    NoticiasComponent,
+    DonacionComponent
 
-
+   
+        /*     DonacionSolicitudFormComponent,
+        DonacionSolicitudComponent, */
+    /*     UsuarioFormComponent,
+       
+        DonarSolicitudFormComponent,
+        
+        DonacionComponent, */
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -55,9 +65,16 @@ import { AuthInterceptorService } from './auth-interceptor.service';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NgbModule,
+   
   ],
   providers: [
-    UsuariosService, {
+    UsuariosService, 
+    TalleresService,
+    AnonimoService,
+    DonacionComponent,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true

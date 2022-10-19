@@ -9,25 +9,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AdminComponentComponent implements OnInit {
   @HostBinding('class') classes = 'row'
 
-  pass: boolean = false
-  passfeedback: boolean = false
-  entrada: string =''
-
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.loguearse() 
   }
 
   loguearse() {
-    const ent = this.entrada
-    ent == "nerd" ?
-      (
-        console.log(ent),
-        this.pass = true,
+   
         this.router.navigate(['/usuarios'])
 
-      ) :
-      this.pass = false
-      this.passfeedback=true
   }
 }

@@ -3,12 +3,21 @@ const { check } = require('express-validator');
 const { validateResult } = require('../helpers/validateHelper')
 /////
 const validateCreate = [
+    check('ter')
+        .exists()
+        .custom((value, { req }) => {
+            console.log(value);
+            if (value == false) {
+                throw new Error('debe aceptar los términos y condiciones.')
+            }
+            return true
+        }),
     check('nombre')
         .exists()
         .isLength({ min: 5 }),
     check('apellido')
         .exists()
-        .isLength({ min: 5 }),
+        .isLength({ min: 5, max: 10 }),
     check('password')
         .exists()
         .custom((value, { req }) => {

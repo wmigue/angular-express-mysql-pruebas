@@ -32,15 +32,19 @@ export class LoginComponent implements OnInit {
       .subscribe(
         res => {
           this.data = res
-          if(this.data.error==1){
-            this.errores=true
-          }else{
+          if (this.data.error == 1) {
+            this.errores = true
+          } else {
             localStorage.setItem('token', this.data.token)
-            this.router.navigate(['/mitaller'])
+            if (this.data.rol === 'admin') {
+              this.router.navigate(['/admin'])
+            } else {
+              this.router.navigate(['/mitaller'])
+            }
           }
         },
         err => {
-         console.error(err)
+          console.error(err)
         }
       )
   }

@@ -1,7 +1,9 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
+import { Taller } from 'src/app/models/taller';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { TalleresService } from 'src/app/services/talleres.service';
 
 
 @Component({
@@ -13,9 +15,11 @@ export class RegistroAlumnosComponent implements OnInit {
 
   @HostBinding('class') clases = 'row';
 
+
   res: any = {}
   errores: Object = { msg: '', param: '' }
   registrado: boolean
+  listatalleres: any
   usuario: Usuario = {
     id: 0,
     nombre: '',
@@ -25,18 +29,20 @@ export class RegistroAlumnosComponent implements OnInit {
     mail: '',
     created_at: new Date(),
     estado: 'no habilitado',
-    taller: ''
+    taller: '',
+    ter: false
   }
 
 
 
 
-  constructor(private usuarioService: UsuariosService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private usuarioService: UsuariosService,private talleresService:TalleresService, private router: Router, private activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
     this.registrado = false
+    this.getTalleres()
   }
 
   saveUsuario() {
@@ -57,5 +63,23 @@ export class RegistroAlumnosComponent implements OnInit {
         }
       )
   }
+
+
+
+
+  getTalleres() {
+    this.talleresService.getLista()
+      .subscribe(
+        res => {
+          this.listatalleres = res
+          console.log(this.listatalleres)
+        },
+        err => console.log(err)
+      )
+  }
+
+
+ 
+
 
 }

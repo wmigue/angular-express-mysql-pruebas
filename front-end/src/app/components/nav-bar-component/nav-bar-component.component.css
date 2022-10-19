@@ -1,5 +1,6 @@
 :host .navbar-propio{
     background-color:#a2d2ffff;
+    width: 100vw;
 }
 
 .links{
@@ -7,6 +8,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-right: 50px;
+    
 
 }
 li>a{
@@ -17,4 +19,44 @@ a:hover{
     background-color:rgb(97, 174, 246);
     border-radius: 15px;
     color: aliceblue;
+}
+.donaciones{
+    margin-left: 50px !important;
+    background-color: #a2d2ffff;
+    color: black;
+}
+.donaciones:hover{
+    background-color: rgb(97, 174, 246);
+    
+}
+ 
+#btnDonar2{
+ max-width: 105px;
+}
+
+#btnDonar2:hover{
+    cursor: pointer;
+}
+
+.donaciones{
+    padding: 10px;
+}
+
+
+
+.btns {
+    font-weight: 600;
+    color: #fff;
+    background-color:#905aafff;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+
+.btns2 {
+    font-weight: 600;
+    color: #fff;
+    background-color:rgb(175, 90, 90);
+    padding: 4px;
+    border-radius: 4px;
 }

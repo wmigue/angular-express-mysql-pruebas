@@ -27,8 +27,8 @@
                 <div class="form-group row">
                     <label for="password" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Nombre" [(ngModel)]="usuario.password">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Nombre"
+                            [(ngModel)]="usuario.password">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -50,20 +50,21 @@
                     <div class="col-sm-10">
                         <select class="form-select" name="taller" id="taller" aria-label="Default select example"
                             [(ngModel)]="usuario.taller">
-                            <option selected>seleccionar taller</option>
-                            <option value="taller 1">taller 1 </option>
-                            <option value="taller 2">taller 2</option>
-                            <option value="taller 3">taller 3</option>
+                            <option selected disabled>seleccionar taller</option>
+                            <option *ngFor="let t of listatalleres" [value]="t.nombre">
+                                {{t.nombre}}
+                            </option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" id="fecha" placeholder="Fecha"
-                            [(ngModel)]="usuario.created_at">
+                    <div class="mt-5">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" name="ter" id="ter" [(ngModel)]="usuario.ter" >
+                        </div>
                     </div>
+
+
                 </div>
+
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary text-right btnguardar"

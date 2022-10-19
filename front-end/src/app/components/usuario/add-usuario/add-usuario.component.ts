@@ -12,35 +12,46 @@ import { UsuarioComponent } from '../usuario.component';
 export class AddUsuarioComponent implements OnInit {
 
   @HostBinding('class') clases = 'row';
-  
+
+  res: any = {}
+  errores: Object = { msg: '', param: '' }
+  registrado: boolean
   usuario: Usuario = {
     id: 0,
     nombre: '',
     apellido: '',
     role: '',
-    password: '',
+    password: 'password',
+    mail: '',
     created_at: new Date(),
     estado: 'no habilitado',
     taller: ''
   }
+
 
   constructor(private usuarioService: UsuariosService, private router: Router, private activatedRoute: ActivatedRoute, private parent: UsuarioComponent) {
 
   }
 
   ngOnInit() {
- 
+
   }
 
   saveUsuario() {
     this.usuarioService.guardarUsuario(this.usuario)
       .subscribe(
         res => {
-          console.log(res)
-          this.parent.getUsuarios() //metodo que viene del padre
-          //this.router.navigate(['/usuarios']);
+          this.res = res
+          !this.res.error ? this.registrado = true : this.errores = [{ msg: this.res.message, param: this.res.status }]
+          this.parent.getUsuarios()
         },
-        err => console.error(err)
+        err => {
+          //express-validator se ejecuta aca (validaciones en el backend de los campos que le mandamos desde el body del frontend)
+          this.errores = err.error.errors
+          for (let e of err.error.errors) {
+            console.log(e)
+          }
+        }
       )
   }
 
