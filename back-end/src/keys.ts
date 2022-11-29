@@ -3,7 +3,7 @@ export default {
     database: {
         host: 'localhost',
         user: 'root',
-        password: '',
+        password: '0',
         database: 'donaciones'
     }
 

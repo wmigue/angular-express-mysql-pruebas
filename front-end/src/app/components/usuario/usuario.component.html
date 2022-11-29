@@ -1,12 +1,16 @@
-<div class="contenedor_btn">
-    <button id="btn_donante" type="button" class="btn btn-secondary" (click)="abrirModal()">  Agregar Usuario / Alumno</button>
+<!-- <div class="contenedor_btn">
+    <button id="btn_donante" type="button" class="btn btn-secondary" (click)="abrirModal()"> Agregar Usuario /
+        Alumno</button>
 </div>
+ -->
 
-
-<div *ngIf="modalswitch == true">
+<!-- <div *ngIf="modalswitch == true">
     <app-add-usuario></app-add-usuario>
 </div>
+ -->
 
+
+<h2>Alumnos Talleres</h2>
 <table class="table table-responsive table-bordered">
     <tr>
         <th>ID</th>
@@ -18,7 +22,7 @@
         <th> Estado</th>
         <th></th>
     </tr>
-    <tr *ngFor="let x of usuarios">
+    <tr *ngFor="let x of data.usuarios">
         <td>{{ x.id }}</td>
         <td>{{ x.nombre }}</td>
         <td>{{ x.apellido}}</td>
@@ -29,9 +33,134 @@
         <td>
             <!--   <button class="btn btn-primary" [routerLink]='["/usuarios/" +  x.id  ]'>Editar</button> -->
             <div *ngIf="x.password !== 'nerd'">
-                <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"(click)="habilitarUsuario(x.id)">Habilitar</button>
-                <button id="btn_eliminar" type="button" class="btn btn-primary btn-sm"(click)="deleteUsuario(x.id)">Eliminar</button>
+                <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"
+                    (click)="habilitarUsuario(x.id)">Habilitar / desabilitar</button>
+                <button id="btn_eliminar" type="button" class="btn btn-primary btn-sm"
+                    (click)="deleteUsuario(x.id)">Eliminar</button>
             </div>
         </td>
     </tr>
 </table>
+
+
+
+
+<h2>Organizaciones</h2>
+<table class="table table-responsive table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Mail</th>
+        <th>Imagen</th>
+        <th> Estado</th>
+        <th>Pass</th>
+        <th> </th>
+
+        <th></th>
+    </tr>
+    <tr *ngFor="let x of data.organizaciones">
+        <td>{{ x.id }}</td>
+        <td>{{ x.nombre }}</td>
+        <td>{{ x.mail}}</td>
+        <td class="img"><a href="http://localhost:3003/public/temp/{{ x.foto}}"><img width="60%"
+                    src="http://localhost:3003/public/temp/{{ x.foto}}"></a></td>
+        <td>{{ x.estado}}</td>
+        <td>{{ x.password}} </td>
+        <td>
+            <div *ngIf="x.password !== 'nerd'">
+                <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"
+                    (click)="habilitarOrg(x.id)">Habilitar / desabilitar</button>
+                <button id="btn_eliminar" type="button" class="btn btn-primary btn-sm"
+                    (click)="deleteOrg(x.id)">Eliminar</button>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+<div class="container bg-light m-3">
+    <h2>Causas</h2>
+    <table class="table table-responsive table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>DENOMINACION</th>
+            <th>PAIS</th>
+            <th>donaciones recibidas</th>
+        </tr>
+        <tr *ngFor="let x of data.causas">
+            <td>{{ x.id }}</td>
+            <td>{{ x.denominacion }}</td>
+            <td>{{ x.pais}}</td>
+            <td><button type="button" class="btn btn-link" (click)="openModalWithParams(contenido2, x.id)">VER</button>
+            </td>
+        </tr>
+    </table>
+    <button class="btn-primary btn" (click)="openModalWithParams(contenido1)">Agregar nueva</button>
+</div>
+
+
+
+
+
+
+<ng-template #contenido1 let-modal1>
+    <div class="p-5">
+        <div class="form-group p-2 ">
+            <h4>Agrega una CAUSA</h4>
+        </div>
+        <div class="form-group p-2 ">
+            <input class="form-control form-control-sm" type="text" name="denominacion" placeholder="denominacion"
+                [(ngModel)]="causa.denominacion">
+        </div>
+        <div class="form-group p-2 ">
+            <input class="form-control form-control-sm" type="text" name="pais" placeholder="pais"
+                [(ngModel)]="causa.pais">
+        </div>
+    </div>
+    <div class="form-group text-center p-3 ">
+        <button type="button" class="btn btn-primary" (click)="guardarCausa(causa)">Guardar</button>
+    </div>
+    <div class="centrame">
+        <ul *ngIf="errores !== null ">
+            <li style="color: red;" *ngFor="let e of errores['addCausas']">{{e.msg + ' ' + e.param}}</li>
+        </ul>
+    </div>
+</ng-template>
+
+
+
+
+<ng-template #contenido2 let-modal2>
+    <div class="p-5">
+        <h2>Lista donaciones</h2>
+        <table class="table table-responsive table-bordered">
+            <tr>
+                <th>fecha</th>
+                <th>org. donante</th>
+                <th>causa</th>
+                <th>articulo</th>
+                <th>cantidad</th>
+                <th>aprobado</th>
+                <th></th>
+
+            </tr>
+            <tr *ngFor="let x of data2">
+                <td>{{ x.fecha }}</td>
+                <td>{{ x.nombre }}</td>
+                <td>{{ x.denominacion}}</td>
+                <td>{{ x.articulo}}</td>
+                <td>{{ x.cantidad}}</td>
+                <td *ngIf="x.aprobado==1">✅</td>
+                <td *ngIf="x.aprobado==0">❌</td>
+                <td>
+                    <button type="button" class="btn btn-link" (click)="cambiarEstado(x.id, x.cid)">
+                        Cambiar estado
+                    </button>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+</ng-template>

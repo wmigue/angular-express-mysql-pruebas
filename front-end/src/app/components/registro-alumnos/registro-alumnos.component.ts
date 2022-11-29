@@ -51,7 +51,7 @@ export class RegistroAlumnosComponent implements OnInit {
         res => {
           //console.log(res)
           this.res = res
-          //error que viene de usuarioController en la propiedad error=1 osea, ese usuario ya existe en la base de datos.
+          //error que viene de usuarioController en la propiedad param=403 osea, ese usuario ya existe en la base de datos.
           !this.res.error ? this.registrado = true : this.errores = [{ msg: this.res.message, param: this.res.status }]
         },
         err => {

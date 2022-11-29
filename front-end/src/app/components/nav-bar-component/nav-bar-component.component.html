@@ -11,26 +11,33 @@
     </div>
     <div class="collapse navbar-collapse " id="navbarNav">
       <ul class="navbar-nav links">
+        <div class="nav-item" style="margin-right: 20px;" *ngIf="isLoggedIn()">
+          <button type="button" class="btn btn-danger" (click)="logOut()">LOGOUT!</button>
+        </div>
         <li class="nav-item">
-          <a class="nav-link" href="/donaciones">Donaciones Anonimas</a>
-        </li>
-     <!--    <li class="nav-item">
-          <a class="nav-link" href="/organizaciones">Organizaciones</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link " href="/noticias">Noticias</a>
+          <a routerLink="/organizacion" class="nav-link" >Organizaciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/quienes-somos"> Sobre Nosotros</a>
+          <a routerLink="/donaciones" class="nav-link" >Donaciones</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/noticias" class="nav-link " >Noticias</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/mitaller"> Mi taller</a>
+          <a routerLink="/quienes-somos" class="nav-link "> Nosotros</a>
         </li>
         <li class="nav-item">
-          <b><a class="nav-link " href="/login"> Login</a></b>
+          <a routerLink="/mitaller" class="nav-link " > Mi taller</a>
         </li>
         <li class="nav-item">
-          <b><a class="nav-link " href="/admin"> Admin</a></b>
+          <a class="nav-link " href="/home"> Inicio</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <b><a routerLink="/login" class="nav-link " > Login</a></b>
+        </li>
+        <li class="nav-item" >
+          <b><a routerLink="/admin" class="nav-link "> Admin</a></b>
         </li>
         <li>
           <div class="donaciones">
@@ -53,12 +60,10 @@
     <div class="modal-body" *ngIf="!sedono; else gracias">
       <select class="form-select mb-5" aria-label="Default select example" [(ngModel)]="donacionAnonima.causa">
         <option selected disabled>CAUSA</option>
-        <option value="Niños Africa">Niños Africa</option>
-        <option value="Residentes Ucrania">Residentes Ucrania</option>
-        <option value="Fundación Cancer" >Fundación Cancer</option>
+        <option value="{{e.denominacion}}" *ngFor="let e of causas">{{e.denominacion}}</option>
       </select>
       <select class="form-select mb-5" aria-label="Default select example" [(ngModel)]="donacionAnonima.importe">
-        <option disabled selected  >IMPORTE</option>
+        <option disabled selected>IMPORTE</option>
         <option value="100">$100</option>
         <option value="200">$200</option>
         <option value="500">$500</option>
@@ -67,7 +72,6 @@
         <button type="button" class="btns" (click)="donar(donacionAnonima)">Donar</button>
       </div>
     </div>
-
   </ng-template>
 
 

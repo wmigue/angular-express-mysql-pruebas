@@ -11,6 +11,7 @@ export class ErroresComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    
     this.route.params.subscribe((params: Params) => this.mensaje = params['mensaje'])
   }
 

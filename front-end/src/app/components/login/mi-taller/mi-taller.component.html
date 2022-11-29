@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12" *ngFor="let task of data.usuario">
-        <div class="card">
+        <div class="card" *ngIf="task.taller!==''; else sintaller">
             <div class="card-body">
                 <h3>Hola, {{task.nombre}} {{task.apellido}} !</h3>
                 <p><b>tu taller es:</b> {{task.taller}}</p>
@@ -9,3 +9,7 @@
         </div>
     </div>
 </div>
+
+<ng-template #sintaller>
+    No tienes taller activo.
+</ng-template>

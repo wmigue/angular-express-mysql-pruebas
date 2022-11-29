@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken')
 
 
-const signToken = (id, role) => { //otra encryptacion
+const signToken = (id, role) => { 
     return jwt.sign({ id, role }, 'secretkey', {
-        expiresIn: 60, //al token lo seteamos para que expire en 60 segundos.
+        expiresIn: 15 * 60, //expira el token en 60 segundos * multiplicador
     })
 }
 

@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DonacionComponent } from './components/donaciones/donaciones.component';
 import { HomeComponent } from './components/home/home.component';
-import { OrganizacionFormComponent } from './components/organizacion/organizacion-form/organizacion-form.component';
-import { OrganizacionComponent } from './components/organizacion/organizacion.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AdminComponentComponent } from './components/admin-component/admin-component.component';
 import { RegistroAlumnosComponent } from './components/registro-alumnos/registro-alumnos.component';
@@ -13,6 +11,9 @@ import { MiTallerComponent } from './components/login/mi-taller/mi-taller.compon
 import { ErroresComponent } from './components/errores/errores.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { QuinesSomosComponent } from './components/quines-somos/quines-somos.component';
+import { RegistroOrganizacionesComponent } from './components/registro-organizaciones/registro-organizaciones.component';
+import { OrgComponent } from './components/org/org.component';
+import { OrganizacionesComponent } from './components/organizaciones/organizaciones.component';
 
 const routes: Routes = [
   {
@@ -24,10 +25,6 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent
   },
-  /*   { path: 'donacion-solicitud', component: DonacionSolicitudComponent },
-    { path: 'donacion-solicitud/:id', component: DonacionSolicitudFormComponent },
-    { path: 'donar-solicitud/:id', component: DonarSolicitudFormComponent },
-    { path: 'donacion-solicitud-crear', component: DonacionSolicitudFormComponent }, */
   {
     path: 'admin',
     component: AdminComponentComponent
@@ -50,11 +47,27 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    component: UsuarioComponent
+    component: UsuarioComponent,
+    
+  },
+  {
+    path: 'org/:id',
+    component: OrgComponent,
+    
+  },
+  {
+    path: 'org',
+    component: OrgComponent,
+    
+  },
+  {
+    path: 'organizacion',
+    component: OrganizacionesComponent,
+    
   },
   {
     path: 'organizaciones',
-    component:OrganizacionComponent
+    component:RegistroOrganizacionesComponent
   },
   {
     path: 'registroTaller',
@@ -69,16 +82,7 @@ const routes: Routes = [
     path:'mitaller',
     component:MiTallerComponent
   }
-  /*   { path: 'usuario/:id', component: UsuarioFormComponent },
-    { path: 'usuario-crear', component: UsuarioFormComponent },
-  
-    { path: 'donacion', component: DonacionComponent },
-  
-    { path: 'organizacion', component: OrganizacionComponent },
-    { path: 'organizacion/:id', component: OrganizacionFormComponent },
-    { path: 'organizacion-crear', component: OrganizacionFormComponent },
-    */
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

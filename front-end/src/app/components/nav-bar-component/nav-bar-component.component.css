@@ -1,4 +1,8 @@
 :host .navbar-propio{
+    background-image: url("../../../assets/imagnes/donar1.jpg");
+    height:300px;
+    background-repeat:no-repeat;
+    background-size: 100%;
     background-color:#a2d2ffff;
     width: 100vw;
 }

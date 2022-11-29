@@ -33,6 +33,9 @@ export class MiTallerComponent implements OnInit {
           this.data = res
           console.log(JSON.stringify(res))
           //console.log(this.data.usuario[0].estado)
+          if(!this.data.usuario[0]){
+            this.router.navigate(['/errores', 'las org no pueden no estan inscriptas en los talleres.'])
+          }
           if (this.data.usuario[0].estado === 'no habilitado') {
             this.router.navigate(['/errores', 'no estas habilitado por el admin.'])
           } else {

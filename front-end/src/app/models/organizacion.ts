@@ -1,11 +1,11 @@
-import { IBase } from "./base";
-import { Usuario } from "./usuario";
-import { UsuarioOrganizacion } from "./usuarioOrganizacion";
 
-export interface IOrganizacion extends IBase{
-    nombre: string
-    descripcion: string
-    contactoId: number
-    contacto: Usuario
-    usuarioOrganizacion: UsuarioOrganizacion[]
+
+export interface Organizacion {
+    id?: number
+    nombre?: string
+    mail?: string
+    password?: string
+    foto?: string
+    estado?: string
+    ter?: boolean
 }

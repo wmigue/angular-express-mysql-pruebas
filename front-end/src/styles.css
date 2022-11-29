@@ -20,7 +20,14 @@ code {
   border-color: #1861ac;
 }
 
+.centrame{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
 
+}
 
 
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -30,5 +37,9 @@ code {
  
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 
-html, body { height: 100%; }
+html, body {  
+  min-height: 100vh;
+  height: 450vh;
+  margin: 0;
+ }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

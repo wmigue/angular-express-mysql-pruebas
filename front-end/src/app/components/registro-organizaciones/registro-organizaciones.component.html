@@ -1,0 +1,112 @@
+<div class="contenedor ">
+    <div class="card contenido">
+        <div class="card-body text-center tituloBody">
+        </div>
+        <div class="card-body" *ngIf="!registrado; else bloqueRegistrado">
+            <h3>Registrar una ORGANIZACION</h3>
+
+            <form [formGroup]="form" (ngSubmit)="save()" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label for="apellido" class="col-sm-2 col-form-label">nombre</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="nombre"
+                            formControlName="nombre">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">mail</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="mail" name="mail" placeholder="mail"
+                            formControlName="mail">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password" placeholder="PASSWORD"
+                            formControlName="password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="telefono" placeholder="Teléfono"
+                            formControlName="telefono">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group row">
+                        <label for="direccion" class="col-sm-2 col-form-label">direccion</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="direccion"
+                                placeholder="escribe tu direccion y presiona enter" formControlName="direccion"
+                                (change)="buscarMapa($event)">
+                        </div>
+                    </div>
+
+
+                    <div class=" centrame" *ngIf="busqueda !=='' ">
+                        <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade" [src]="urlSafe">
+                        </iframe>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="mail" class="col-sm-2 col-form-label">foto</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="foto" placeholder="foto"
+                            (change)="capturarFile($event)" formControlName="foto">
+                    </div>
+                    <div class="text-center">
+                        <img alt="Avatar" src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png" style="padding: 20px; width: 30%;" src={{previsualizacion}}>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="mt-2">
+                        <div class=" centrame">
+                            <div class="form-check form-switch ">
+                                acepto los terminos y condiciones
+                                <input type="checkbox" class="form-check-input" name="ter" id="ter"
+                                    formControlName="ter">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" centrame">
+                    <ul>
+                        <li style="color: red;" *ngFor="let e of errores">{{e.msg + ' ' + e.param}}</li>
+                    </ul>
+                </div>
+                <div class=" centrame">
+                    <div>
+                        <input type="submit" value="registrarme" class="btn btnguardar">
+                    </div>
+                    <div>
+                        <a href="/login"> ya tengo usuario</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <ng-template #bloqueRegistrado>
+            <h4>Organizacion registrada con exito, aguarde la aprobación del administrador para poder iniciar sesión.
+            </h4>
+            <!--            <p> su nombre: {{organizacion.nombre}} </p>
+            <p> su mail: {{organizacion.mail}} </p>
+            <p> su pass: {{organizacion.password}} </p> -->
+
+            <p> su nombre: {{form.get('nombre').value}} </p>
+            <p> su mail: {{form.get('mail').value}} </p>
+            <p> su pass: {{form.get('password').value}} </p>
+
+        </ng-template>
+
+    </div>
+
+</div>

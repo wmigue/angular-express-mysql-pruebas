@@ -1,8 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
+import { Organizacion } from 'src/app/models/organizacion';
 import { Usuario } from 'src/app/models/Usuario';
+import { Causa } from 'src/app/models/causa'
+import OrganizacionesService from 'src/app/services/organizaciones.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { ModalAddComponent } from '../modal-add/modal-add.component';
+import CausasServices from 'src/app/services/causas.service ';
 
 @Component({
   selector: 'app-usuario',
@@ -13,13 +18,20 @@ export class UsuarioComponent implements OnInit {
 
   @HostBinding('class') classes = 'row'
 
-  usuarios: any
- 
-  usu: Usuario  []
 
+  data: any
+  data2: any
   modalswitch: boolean
+  errores:Object={
+    addCausas:[]
+  }
 
-  constructor(private router: Router, private usuarioService: UsuariosService) {
+  causa: Causa = {
+    denominacion: '',
+    pais: ''
+  }
+
+  constructor(private router: Router, private usuarioService: UsuariosService, private OrgService: OrganizacionesService, private organizacionesService: OrganizacionesService, private causasSrv: CausasServices, private parent: ModalAddComponent) {
 
   }
 
@@ -32,8 +44,8 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getAll()
       .subscribe(
         res => {
-          this.usuarios = res;
-          console.log(res);
+          this.data = res
+          console.log(res)
         },
         err => {
           if (err instanceof HttpErrorResponse) {
@@ -42,7 +54,7 @@ export class UsuarioComponent implements OnInit {
             }
           }
         }
-      );
+      )
   }
 
 
@@ -67,11 +79,79 @@ export class UsuarioComponent implements OnInit {
       )
   }
 
-
-
-  abrirModal(){
-   this.modalswitch=!this.modalswitch 
-   console.log(this.modalswitch)
+  deleteOrg(id: string) {
+    this.OrgService.deleteOne(id)
+      .subscribe(
+        res => {
+          console.log(res)
+          this.getUsuarios()
+        },
+        err => console.error(err)
+      )
   }
+
+  habilitarOrg(id: string) {
+    this.OrgService.habilitarOne(id)
+      .subscribe(
+        res => {
+          this.getUsuarios()
+        },
+        err => console.error(err)
+      )
+  }
+
+
+
+
+  abrirModal() {
+    this.modalswitch = !this.modalswitch
+    console.log(this.modalswitch)
+  }
+
+
+
+  openModalWithParams(contenido, id_causa): void {
+    this.causa.denominacion = ''
+    this.causa.pais = ''
+    this.parent.openCentrado(contenido)
+    if (id_causa !== undefined) {
+      this.causasSrv.getMisDonacionesRecibidas(id_causa)
+        .subscribe(x =>
+          this.data2=x
+        ),
+        err => console.log(err)
+    }
+  }
+
+
+
+  guardarCausa(cau: Causa): void {
+    this.causasSrv.addCausa(cau)
+      .subscribe(x => {
+        this.getUsuarios()
+        this.parent.modal.dismissAll()
+        console.log(x)
+      },err=>{
+        this.errores['addCausas']=err.error.errors
+       //console.log(this.errores['addCausas'])
+      }
+      )
+  }
+
+
+  cambiarEstado(id: number, cid): void {
+    this.causasSrv.changeStatus(id)
+      .subscribe(x => {
+        console.log(x)
+        this.getUsuarios()
+        this.causasSrv.getMisDonacionesRecibidas(cid)
+        .subscribe(x =>
+          this.data2=x
+        )
+        
+      },err=>console.log(err)
+      )
+  }
+
 
 }

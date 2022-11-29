@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2022 a las 20:52:40
+-- Tiempo de generación: 26-11-2022 a las 22:44:06
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -39,7 +39,102 @@ CREATE TABLE `anonimas` (
 --
 
 INSERT INTO `anonimas` (`id`, `fecha`, `importe`, `causa`) VALUES
-(28, '2022-10-19T18:52:12.200Z', '100.00', 'Niños Africa');
+(30, '2022-10-26T20:09:17.764Z', '200.00', 'Niños Africa'),
+(31, '2022-10-26T20:11:48.692Z', '100.00', 'Residentes Ucrania'),
+(42, '2022-11-24T21:48:29.882Z', '100.00', 'familias ucranianas');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `causas`
+--
+
+CREATE TABLE `causas` (
+  `id` int(6) NOT NULL,
+  `denominacion` varchar(100) NOT NULL,
+  `pais` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `causas`
+--
+
+INSERT INTO `causas` (`id`, `denominacion`, `pais`) VALUES
+(1, 'familias ucranianas', 'Ucrania'),
+(2, 'niños en situacion de calle', 'Argentina'),
+(6, 'fundacion cancer', 'Argentina'),
+(8, 'inundaciones norte del pais', 'argentina');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `organizaciones`
+--
+
+CREATE TABLE `organizaciones` (
+  `id` int(4) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `mail` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `foto` varchar(100) NOT NULL,
+  `estado` varchar(16) NOT NULL DEFAULT 'no habilitado',
+  `role` varchar(5) NOT NULL DEFAULT 'org'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `organizaciones`
+--
+
+INSERT INTO `organizaciones` (`id`, `nombre`, `mail`, `password`, `foto`, `estado`, `role`) VALUES
+(19, 'ORG 1', 'org1@org1.com', '000000', '1668623858061-avatar.png', 'habilitado', 'org'),
+(20, 'ORG 2', 'org2@org2.com', '000000', '1669498503607-IMG_20180812_103112997.jpg', 'habilitado', 'org');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orgstock`
+--
+
+CREATE TABLE `orgstock` (
+  `id` int(4) NOT NULL,
+  `id_organizacion` int(4) NOT NULL,
+  `articulo` varchar(60) NOT NULL,
+  `cantidad` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `orgstock`
+--
+
+INSERT INTO `orgstock` (`id`, `id_organizacion`, `articulo`, `cantidad`) VALUES
+(29, 19, 'zapatillas talle 41 x par', 6),
+(30, 19, 'remeras lisas x unidad', 6),
+(31, 20, 'paquete arroz x 500g', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orgstock_causas`
+--
+
+CREATE TABLE `orgstock_causas` (
+  `id` int(5) NOT NULL,
+  `id_orgstock` int(5) NOT NULL,
+  `id_causas` int(5) NOT NULL,
+  `cantidad` int(3) NOT NULL,
+  `fecha` varchar(12) NOT NULL,
+  `aprobado` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `orgstock_causas`
+--
+
+INSERT INTO `orgstock_causas` (`id`, `id_orgstock`, `id_causas`, `cantidad`, `fecha`, `aprobado`) VALUES
+(23, 29, 1, 2, '2022-11-16T1', 1),
+(24, 30, 1, 7, '2022-11-16T1', 1),
+(25, 31, 1, 2, '2022-11-26T2', 1),
+(26, 31, 2, 3, '2022-11-26T2', 0);
 
 -- --------------------------------------------------------
 
@@ -77,17 +172,17 @@ CREATE TABLE `usuario` (
   `created_at` varchar(30) NOT NULL,
   `estado` varchar(20) NOT NULL DEFAULT 'no habilitado',
   `taller` varchar(30) NOT NULL,
-  `mail` varchar(60) NOT NULL
+  `mail` varchar(60) NOT NULL,
+  `ter` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `role`, `password`, `created_at`, `estado`, `taller`, `mail`) VALUES
-(63, 'admin', 'admin', 'admin', 'nerd', '2022-09-28T04:30:45.577Z', 'admin', '', 'admin@admin.com'),
-(142, 'villalba', 'miguel', '', '000000', '2022-10-17T21:41:16.167Z', 'habilitado', 'forja', 'wmigue@gmail.com'),
-(143, 'rrrrrr', 'rrrrrr', '', '000000', '2022-10-18T01:57:54.009Z', 'no habilitado', '', 'r@r.com');
+INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `role`, `password`, `created_at`, `estado`, `taller`, `mail`, `ter`) VALUES
+(63, 'admin', 'admin', 'admin', 'nerd', '2022-09-28T04:30:45.577Z', 'admin', '', 'admin@admin.com', 0),
+(155, 'usuario 1', 'usuario 1', '', '0', '2022-11-05T20:51:33.908Z', 'habilitado', 'forja', 'wmigue@gmail.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -98,6 +193,33 @@ INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `role`, `password`, `created_
 --
 ALTER TABLE `anonimas`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `causas`
+--
+ALTER TABLE `causas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `organizaciones`
+--
+ALTER TABLE `organizaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `orgstock`
+--
+ALTER TABLE `orgstock`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_organizacion` (`id_organizacion`);
+
+--
+-- Indices de la tabla `orgstock_causas`
+--
+ALTER TABLE `orgstock_causas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_orgstock` (`id_orgstock`),
+  ADD KEY `id_causas` (`id_causas`);
 
 --
 -- Indices de la tabla `taller`
@@ -119,19 +241,60 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anonimas`
 --
 ALTER TABLE `anonimas`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de la tabla `causas`
+--
+ALTER TABLE `causas`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `organizaciones`
+--
+ALTER TABLE `organizaciones`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `orgstock`
+--
+ALTER TABLE `orgstock`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT de la tabla `orgstock_causas`
+--
+ALTER TABLE `orgstock_causas`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `taller`
 --
 ALTER TABLE `taller`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `orgstock`
+--
+ALTER TABLE `orgstock`
+  ADD CONSTRAINT `orgstock_ibfk_1` FOREIGN KEY (`id_organizacion`) REFERENCES `organizaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `orgstock_causas`
+--
+ALTER TABLE `orgstock_causas`
+  ADD CONSTRAINT `orgstock_causas_ibfk_1` FOREIGN KEY (`id_orgstock`) REFERENCES `orgstock` (`id`),
+  ADD CONSTRAINT `orgstock_causas_ibfk_2` FOREIGN KEY (`id_causas`) REFERENCES `causas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

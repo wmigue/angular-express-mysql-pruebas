@@ -1,3 +1,8 @@
+.body{
+    height: 650vh;
+}
+
+
 .contenedor{
   width: 80%;
   margin-left: clamp(180px, 17%, 280px);

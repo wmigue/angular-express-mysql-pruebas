@@ -1,15 +1,13 @@
-<div class="contenedor">
-    <div class="card contenido" style="width: 35rem; margin: 0 auto;">
+<div class="contenedor " >
+    <div class="card contenido" >
         <div class="card-body text-center tituloBody">
         </div>
-
-
         <div class="card-body" *ngIf="!registrado; else bloqueRegistrado">
             <h3>Registrarse</h3>
             <form>
                 <ul>
                     <li style="color: red;" *ngFor="let e of errores">{{e.msg + ' ' + e.param}}</li>
-                </ul>
+                </ul> 
                 <div class="form-group row">
                     <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
                     <div class="col-sm-10">
@@ -51,14 +49,15 @@
                         <select class="form-select" name="taller" id="taller" aria-label="Default select example"
                             [(ngModel)]="usuario.taller">
                             <option selected disabled>seleccionar taller</option>
-                            <option *ngFor="let t of listatalleres" [value]="t.nombre">
+                         <option *ngFor="let t of listatalleres" [value]="t.nombre">
                                 {{t.nombre}}
-                            </option>
+                            </option> 
                         </select>
                     </div>
                     <div class="mt-5">
                         <div class="form-check form-switch">
-                            <input type="checkbox" name="ter" id="ter" [(ngModel)]="usuario.ter" >
+                            acepto los terminos y condiciones
+                            <input type="checkbox" class="form-check-input" name="ter" id="ter" [(ngModel)]="usuario.ter">
                         </div>
                     </div>
 
@@ -72,12 +71,7 @@
                     </div>
 
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button id="btnCancelar" class="btn btn-primary text-right btnguardar">Cancelar</button>
-                    </div>
-
-                </div>
+   
             </form>
 
         </div>

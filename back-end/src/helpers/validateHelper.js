@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator'); 
 //import { body, validationResult } from 'express-validator';
+
 // retorna un error si no se valida algo, sino pasa con next a la siguiente funcion o middelware.
 const validateResult = (req, res, next) => {
     try {

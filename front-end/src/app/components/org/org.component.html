@@ -1,0 +1,152 @@
+<div class="card text-center">
+  <h5 class="card-header">Mi Organizacion</h5>
+  <div class="card-body">
+    <h5 class="card-title">
+      <img src="http://localhost:3003/public/temp/{{dataOrg.usuario[0].foto}}" width="50" class="avatar">
+    </h5>
+    <b class="card-text">{{dataOrg.usuario[0].nombre}}</b>
+    <p class="card-text">{{dataOrg.usuario[0].mail}}</p>
+    <a class="btn btn-primary btn-sm" (click)="openModal(contenido2)">cambiar mi email</a>
+  </div>
+</div>
+
+<br />
+
+<div class="card">
+  <h5 class="card-header">Mi Stock De Articulos</h5>
+  <div class="card-body">
+    <div class="d-flex flex-row mb-3">
+      <div class="card text-bg-light mb-3" style="max-width: 18rem;" *ngFor="let e of dataStock">
+        <div class="m-2">
+          <div class="card-header">{{e.articulo}}</div>
+          <div class="card-body">
+            <h5 class="card-title"><b>en stock:</b> {{e.cantidad}}</h5>
+            <p class="card-text"><button class="btn btn-warning"
+                (click)="openModalWithParams(contenido3, e.id)">donar</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="btn btn-primary btn-sm" (click)="openModal(contenido)">Agregar articulos</a>
+  </div>
+</div>
+
+<br />
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Mis Donaciones
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <table class="table table-bordered border-primary">
+          <thead>
+            <tr>
+              <th scope="col">fecha</th>
+              <th scope="col">Organizacion donante</th>
+              <th scope="col">Articulo</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Causa</th>
+              <th scope="col">Pais</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of misdonaciones">
+              <td>{{e.fecha}}</td>
+              <td>{{e.nombre}} <b style="color: red;">(Yo)</b> </td>
+              <td>{{e.articulo}}</td>
+              <td>{{e.cantidad}}</td>
+              <td>{{e.denominacion}}</td>
+              <td>{{e.pais}}</td>
+              <td *ngIf="e.aprobado === 1">✅</td>
+              <td *ngIf="e.aprobado === 0">❌</td>
+     
+            </tr>
+          </tbody>        
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #contenido let-modal>
+  <div class="p-5">
+    <div class="form-group p-2 ">
+      <input class="form-control form-control-sm" type="text" name="articulo" placeholder="descripcion del articulo"
+        [(ngModel)]="articulo.articulo">
+    </div>
+    <div class="form-group p-2">
+      <input class="form-control form-control-sm" type="number" name="cantidad" placeholder="cantidad"
+        [(ngModel)]="articulo.cantidad">
+    </div>
+    <br>
+    <div class="form-group text-center">
+      <button type="button" class="btn btn-primary" (click)="addArticuloDB(articulo)">agregar a mi STOCK</button>
+    </div>
+    <div class="centrame">
+      <ul>
+        <li style="color: red;" *ngFor="let e of errores">{{e.msg + ' ' + e.param}}</li>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+<ng-template #contenido2 let-modal2>
+  <div class="p-5">
+    <div class="form-group p-2 ">
+      <input class="form-control form-control-sm" type="email" name="mail" placeholder="nuevo email"
+        [(ngModel)]="emailNuevo">
+    </div>
+  </div>
+  <div class="form-group text-center p-3 ">
+    <button type="button" class="btn btn-primary" (click)="changeEmail(emailNuevo, id_org)">cambiar mail</button>
+  </div>
+  <div class="centrame">
+    <ul *ngIf="errores !== null ">
+      <li style="color: red;" *ngFor="let e of errores">{{e.msg + ' ' + e.param}}</li>
+    </ul>
+    <p style="color: red;">{{res.message}}</p>
+  </div>
+</ng-template>
+
+
+
+
+
+<ng-template #contenido3 let-modal3>
+  <div class="container" *ngIf="!sedono; else gracias">
+    <div class="modal-header">
+      <h2 class="modal-title">donar a la causa:</h2>
+    </div>
+   <!--  id del articulo a donar:<b>{{articulo_id}}</b> -->
+    <select class="form-select mb-5" aria-label="Default select example" (change)="cambiarOption($event)">
+      <option selected disabled>CAUSA</option>
+      <option id="{{e.id}}" value="{{e.id}}" *ngFor="let e of causas">{{e.denominacion}}</option>
+    </select>
+    <input class="form-control form-control-sm" type="number" min="1" max="{{cantidad_de_ese_articulo}}" name="cantidad"
+      placeholder="cantidad" [(ngModel)]="articulo.cantidad">
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary"
+        (click)="donarCausa(articulo_id, id_causa_seleccionada, articulo.cantidad)">Donar</button>
+    </div>
+    <div class="text-center">
+      <b class="text-danger" *ngIf="errordonacion">error, no dispones de tanta cantidad</b>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #gracias>
+  <div class="p-4">
+    ✔ donacion exitosa.
+  </div>
+</ng-template>

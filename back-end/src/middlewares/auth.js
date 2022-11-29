@@ -22,7 +22,7 @@ const isAuthenticated = (req, res, next) => {
         })
     } catch (e) {
         //console.log(e)
-        return res.status(401).send('Unauhtorized Request');
+        return res.status(401).send('Unauhtorized Request. verifica tu identidad en JWT.');
     }
 }
 

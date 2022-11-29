@@ -1,0 +1,8 @@
+### update estado=habilitado
+POST http://localhost:3003/api/usuarios/updateEstado HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY2NzY5MTE5NCwiZXhwIjoxNjY3NjkyMDk0fQ.thyTNDw0cjB-gD4qcgHmK8yOV34TnciSZw6-oVDsKOg
+
+{
+  "id": 153
+}

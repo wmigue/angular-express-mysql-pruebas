@@ -8,8 +8,7 @@ import { UsuariosService } from './services/usuarios.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsuarioComponent } from './components/usuario/usuario.component';
-import { OrganizacionFormComponent } from './components/organizacion/organizacion-form/organizacion-form.component';
-import { OrganizacionComponent } from './components/organizacion/organizacion.component';
+
 import { DonacionComponent } from './components/donaciones/donaciones.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddUsuarioComponent } from './components/usuario/add-usuario/add-usuario.component';
@@ -29,14 +28,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import AnonimoService from './services/anonimos.service';
 
+import { RegistroOrganizacionesComponent } from './components/registro-organizaciones/registro-organizaciones.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { OrgComponent } from './components/org/org.component';
+import { ModalAddComponent } from './components/modal-add/modal-add.component';
+import { OrganizacionesComponent } from './components/organizaciones/organizaciones.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     QuinesSomosComponent,
     UsuarioComponent,
-    OrganizacionFormComponent,
-    OrganizacionComponent,
     HomeComponent,
     AddUsuarioComponent,
     NavBarComponentComponent,
@@ -47,8 +50,11 @@ import AnonimoService from './services/anonimos.service';
     MiTallerComponent,
     ErroresComponent,
     NoticiasComponent,
-    DonacionComponent
-
+    DonacionComponent,
+    RegistroOrganizacionesComponent,
+    OrgComponent,
+    ModalAddComponent,
+    OrganizacionesComponent 
    
         /*     DonacionSolicitudFormComponent,
         DonacionSolicitudComponent, */
@@ -67,6 +73,7 @@ import AnonimoService from './services/anonimos.service';
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
+    GoogleMapsModule
    
   ],
   providers: [
@@ -74,6 +81,7 @@ import AnonimoService from './services/anonimos.service';
     TalleresService,
     AnonimoService,
     DonacionComponent,
+    ModalAddComponent,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
