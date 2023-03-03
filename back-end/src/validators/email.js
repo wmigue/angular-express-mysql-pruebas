@@ -3,9 +3,8 @@ const { check } = require('express-validator');
 const { validateResult } = require('../helpers/validateHelper')
 /////
 const validateCreateEmail = [
-    check('nuevo')
-        .exists()
-        .isEmail(),
+    check('passNuevo')
+        .exists(),
     (req, res, next) => {
         validateResult(req, res, next)
     }

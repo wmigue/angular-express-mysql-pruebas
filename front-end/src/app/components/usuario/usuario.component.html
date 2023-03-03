@@ -10,6 +10,14 @@
  -->
 
 
+ <h2>Panel ADMIN</h2>
+ <table class="table table-responsive table-bordered">
+    <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"
+    (click)="openModalPass(contenido3)">Cambiar password</button>
+ </table>
+ 
+
+
 <h2>Alumnos Talleres</h2>
 <table class="table table-responsive table-bordered">
     <tr>
@@ -22,17 +30,17 @@
         <th> Estado</th>
         <th></th>
     </tr>
-    <tr *ngFor="let x of data.usuarios">
-        <td>{{ x.id }}</td>
-        <td>{{ x.nombre }}</td>
-        <td>{{ x.apellido}}</td>
-        <td>{{ x.mail}}</td>
-        <td>{{ x.taller}}</td>
-        <td>{{ x.created_at}} </td>
-        <td>{{ x.estado}} </td>
-        <td>
+    <tr *ngFor="let x of data.usuarios" >
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.id }}</td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.nombre }}</td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.apellido}}</td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.mail}}</td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.taller}}</td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.created_at}} </td>
+        <td *ngIf="x.mail!=='admin@admin.com'">{{ x.estado}} </td>
+        <td >
             <!--   <button class="btn btn-primary" [routerLink]='["/usuarios/" +  x.id  ]'>Editar</button> -->
-            <div *ngIf="x.password !== 'nerd'">
+            <div *ngIf="x.mail !== 'admin@admin.com'">
                 <button id="btn_habilitar" type="button" class="btn btn-secondary btn-sm m-3"
                     (click)="habilitarUsuario(x.id)">Habilitar / desabilitar</button>
                 <button id="btn_eliminar" type="button" class="btn btn-primary btn-sm"
@@ -144,6 +152,7 @@
                 <th>cantidad</th>
                 <th>aprobado</th>
                 <th></th>
+                <th></th>
 
             </tr>
             <tr *ngFor="let x of data2">
@@ -154,13 +163,46 @@
                 <td>{{ x.cantidad}}</td>
                 <td *ngIf="x.aprobado==1">✅</td>
                 <td *ngIf="x.aprobado==0">❌</td>
+                <td *ngIf="x.aprobado==2">Fue rechazado</td>
                 <td>
-                    <button type="button" class="btn btn-link" (click)="cambiarEstado(x.id, x.cid)">
+                    <button type="button" class="btn btn-link" (click)="cambiarEstado(x.id, x.cid)"
+                    *ngIf="x.aprobado!=2"
+                    >
                         Cambiar estado
                     </button>
+                </td>
                 <td>
+                    <button type="button" class="btn btn-link bg-danger text-light" 
+                            (click)="rechazarDonacion(x.idDeArticulo, x.cantidad, x.id, x.cid)"
+                            *ngIf="x.aprobado!=2"
+                            >
+                        Rechazar
+                    </button>
                 </td>
             </tr>
         </table>
     </div>
 </ng-template>
+
+
+
+
+
+<ng-template #contenido3 let-modal3>
+    <div class="p-3">
+      <div class="form-group p-2 ">
+        <input class="form-control form-control-sm" type="email" name="mail" placeholder="nuevo ADMIN pass"
+          [(ngModel)]="passNuevo">
+      </div>
+    </div>
+    <div class="form-group text-center p-3 ">
+      <button type="button" class="btn btn-primary" (click)="changePass(passNuevo, idAdmin)">cambiar password</button>
+    </div>
+<!--     <div class="centrame">
+      <ul *ngIf="errores !== null ">
+        <li style="color: red;" *ngFor="let e of errores">{{e.msg + ' ' + e.param}}</li>
+      </ul>
+      <p style="color: red;">{{res.message}}</p>
+    </div> -->
+  </ng-template>
+  

@@ -46,7 +46,7 @@ export class OrgComponent implements OnInit {
 
 
 
-  emailNuevo: string = ''
+  passNuevo: string = ''
 
   causas: any
 
@@ -198,8 +198,8 @@ export class OrgComponent implements OnInit {
 
 
   //cambiar email de org.
-  changeEmail(nuevo: string, id: number): void {
-    this.orgService.cambiarMail(nuevo, id)
+  changePass(passNuevo: string, id: number): void {
+    this.orgService.cambiarPass(passNuevo, id)
       .subscribe(res => {
         this.errores = null
         this.res = res

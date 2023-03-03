@@ -59,16 +59,10 @@ class OrganizacionesController {
         res.json({ message: 'org PATCHADO' })
     }
 
-    public async updateCorreo(req: Request, res: Response): Promise<void> {
-        const { nuevo, id } = req.body
-        const result = await pool.query('SELECT mail from organizaciones where mail = ?', [nuevo])
-        if (result.length === 0) {
-            //console.log('todo bien, puedo actualizar')
-            const result = await pool.query('UPDATE organizaciones set mail = ? where id = ?', [nuevo, id])
+    public async updatePass(req: Request, res: Response): Promise<void> {
+        const { id, passNuevo } = req.body
+            const result = await pool.query('UPDATE organizaciones set password = ? where id = ?', [passNuevo, id])
             res.json({ message: 'mail cambiado con exito.', status: 204 })
-        } else {
-            res.json({ message: 'ese mail ya existe, error.', status: 403 })
-        }
     }
 
 

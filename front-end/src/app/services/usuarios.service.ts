@@ -28,6 +28,11 @@ export class UsuariosService {
     return this.http.post(`${this.API_URI}/usuarios/updateEstado/`,{id});
   }
 
+  updateAdmin(id: string, passNuevo: string) {
+    return this.http.post(`${this.API_URI}/usuarios/updatepassadmin/`,{passNuevo, id});
+  }
+ 
+
   sigIn(pass: string, mail: string) {
     return this.http.post(`${this.API_URI}/usuarios/signin/`,{pass, mail});
   }

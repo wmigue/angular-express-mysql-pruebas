@@ -22,8 +22,8 @@ export class UsuarioComponent implements OnInit {
   data: any
   data2: any
   modalswitch: boolean
-  errores:Object={
-    addCausas:[]
+  errores: Object = {
+    addCausas: []
   }
 
   causa: Causa = {
@@ -31,7 +31,10 @@ export class UsuarioComponent implements OnInit {
     pais: ''
   }
 
-  constructor(private router: Router, private usuarioService: UsuariosService, private OrgService: OrganizacionesService, private organizacionesService: OrganizacionesService, private causasSrv: CausasServices, private parent: ModalAddComponent) {
+  passNuevo: string
+  idAdmin: string = "63"
+
+  constructor(private router: Router, private usuarioService: UsuariosService, private OrgService: OrganizacionesService, private organizacionesService: OrganizacionesService, private causasSrv: CausasServices, private parent: ModalAddComponent, private parent2: ModalAddComponent) {
 
   }
 
@@ -117,11 +120,16 @@ export class UsuarioComponent implements OnInit {
     if (id_causa !== undefined) {
       this.causasSrv.getMisDonacionesRecibidas(id_causa)
         .subscribe(x =>
-          this.data2=x
+          this.data2 = x
         ),
         err => console.log(err)
     }
   }
+
+
+
+
+
 
 
 
@@ -131,9 +139,9 @@ export class UsuarioComponent implements OnInit {
         this.getUsuarios()
         this.parent.modal.dismissAll()
         console.log(x)
-      },err=>{
-        this.errores['addCausas']=err.error.errors
-       //console.log(this.errores['addCausas'])
+      }, err => {
+        this.errores['addCausas'] = err.error.errors
+        //console.log(this.errores['addCausas'])
       }
       )
   }
@@ -145,13 +153,50 @@ export class UsuarioComponent implements OnInit {
         console.log(x)
         this.getUsuarios()
         this.causasSrv.getMisDonacionesRecibidas(cid)
-        .subscribe(x =>
-          this.data2=x
-        )
-        
-      },err=>console.log(err)
+          .subscribe(x =>
+            this.data2 = x
+          )
+
+      }, err => console.log(err)
       )
   }
+
+
+
+  rechazarDonacion(idArticuloARetornar, cantidad, idDonacionAEliminar, cid): void {
+    this.causasSrv.rechazar(idArticuloARetornar, cantidad, idDonacionAEliminar)
+      .subscribe(x => {
+        console.log(x)
+        this.getUsuarios()
+        this.causasSrv.getMisDonacionesRecibidas(cid)
+          .subscribe(x =>
+            this.data2 = x
+          )
+      }, err => console.log(err)
+      )
+  }
+
+
+
+
+
+  openModalPass(contenido) {
+    this.parent2.openCentrado(contenido)
+  }
+
+
+  changePass(passNuevo, idadmin) {
+    this.usuarioService.updateAdmin(idadmin, passNuevo)
+      .subscribe(x => {
+        console.log(x),
+          err => console.log(err)
+        this.parent2.modal.dismissAll()
+      }
+      )
+  }
+
+
+
 
 
 }

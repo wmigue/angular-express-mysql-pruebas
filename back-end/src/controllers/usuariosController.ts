@@ -69,7 +69,12 @@ class UsuariosController {
         res.json({ usuario: buscado })
     }
 
-
+/////////////////////////////////
+public async updatePassAdmin(req: Request, res: Response): Promise<void> {
+    const { id, passNuevo } = req.body
+        const result = await pool.query('UPDATE usuario set password = ? where id = ?', [passNuevo, id])
+        res.json({ message: 'pass admin cambiado con exito.', status: 204 })
+}
 
 
 }

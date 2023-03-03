@@ -30,6 +30,10 @@ export class CausasServices {
     return this.http.post(`${this.API_URI}/aprobardesaprobar/`, {id})
   }
 
+  rechazar(idArticuloARetornar: string, cantidad: string, idDonacionAEliminar: string) {
+    return this.http.post(`${this.API_URI}/rechazar/`, {idArticuloARetornar, cantidad, idDonacionAEliminar})
+  }
+
 }
 
 export default CausasServices

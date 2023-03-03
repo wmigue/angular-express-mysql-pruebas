@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2022 a las 22:44:06
+-- Tiempo de generación: 29-11-2022 a las 18:08:32
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -63,7 +63,8 @@ INSERT INTO `causas` (`id`, `denominacion`, `pais`) VALUES
 (1, 'familias ucranianas', 'Ucrania'),
 (2, 'niños en situacion de calle', 'Argentina'),
 (6, 'fundacion cancer', 'Argentina'),
-(8, 'inundaciones norte del pais', 'argentina');
+(8, 'inundaciones norte del pais', 'argentina'),
+(16, 'fundacion salud', 'Argentina');
 
 -- --------------------------------------------------------
 
@@ -86,8 +87,7 @@ CREATE TABLE `organizaciones` (
 --
 
 INSERT INTO `organizaciones` (`id`, `nombre`, `mail`, `password`, `foto`, `estado`, `role`) VALUES
-(19, 'ORG 1', 'org1@org1.com', '000000', '1668623858061-avatar.png', 'habilitado', 'org'),
-(20, 'ORG 2', 'org2@org2.com', '000000', '1669498503607-IMG_20180812_103112997.jpg', 'habilitado', 'org');
+(19, 'ORG 1', 'org1@org1.com', '0', '1668623858061-avatar.png', 'habilitado', 'org');
 
 -- --------------------------------------------------------
 
@@ -107,9 +107,8 @@ CREATE TABLE `orgstock` (
 --
 
 INSERT INTO `orgstock` (`id`, `id_organizacion`, `articulo`, `cantidad`) VALUES
-(29, 19, 'zapatillas talle 41 x par', 6),
-(30, 19, 'remeras lisas x unidad', 6),
-(31, 20, 'paquete arroz x 500g', 7);
+(29, 19, 'zapatillas talle 41 x par', 12),
+(30, 19, 'remeras lisas x unidad', 13);
 
 -- --------------------------------------------------------
 
@@ -131,10 +130,8 @@ CREATE TABLE `orgstock_causas` (
 --
 
 INSERT INTO `orgstock_causas` (`id`, `id_orgstock`, `id_causas`, `cantidad`, `fecha`, `aprobado`) VALUES
-(23, 29, 1, 2, '2022-11-16T1', 1),
-(24, 30, 1, 7, '2022-11-16T1', 1),
-(25, 31, 1, 2, '2022-11-26T2', 1),
-(26, 31, 2, 3, '2022-11-26T2', 0);
+(28, 29, 1, 2, '2022-11-29T1', 2),
+(29, 29, 2, 2, '2022-11-29T1', 2);
 
 -- --------------------------------------------------------
 
@@ -182,7 +179,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `role`, `password`, `created_at`, `estado`, `taller`, `mail`, `ter`) VALUES
 (63, 'admin', 'admin', 'admin', 'nerd', '2022-09-28T04:30:45.577Z', 'admin', '', 'admin@admin.com', 0),
-(155, 'usuario 1', 'usuario 1', '', '0', '2022-11-05T20:51:33.908Z', 'habilitado', 'forja', 'wmigue@gmail.com', 1);
+(156, 'miguel', 'miguel', '', '000000', '2022-11-29T16:25:18.366Z', 'no habilitado', 'Taller Artesano', 'mail1@mail1.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -218,8 +215,8 @@ ALTER TABLE `orgstock`
 --
 ALTER TABLE `orgstock_causas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_orgstock` (`id_orgstock`),
-  ADD KEY `id_causas` (`id_causas`);
+  ADD KEY `id_causas` (`id_causas`),
+  ADD KEY `orgstock_causas_ibfk_1` (`id_orgstock`);
 
 --
 -- Indices de la tabla `taller`
@@ -247,13 +244,13 @@ ALTER TABLE `anonimas`
 -- AUTO_INCREMENT de la tabla `causas`
 --
 ALTER TABLE `causas`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `organizaciones`
 --
 ALTER TABLE `organizaciones`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `orgstock`
@@ -265,7 +262,7 @@ ALTER TABLE `orgstock`
 -- AUTO_INCREMENT de la tabla `orgstock_causas`
 --
 ALTER TABLE `orgstock_causas`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `taller`
@@ -277,7 +274,7 @@ ALTER TABLE `taller`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- Restricciones para tablas volcadas
@@ -293,7 +290,7 @@ ALTER TABLE `orgstock`
 -- Filtros para la tabla `orgstock_causas`
 --
 ALTER TABLE `orgstock_causas`
-  ADD CONSTRAINT `orgstock_causas_ibfk_1` FOREIGN KEY (`id_orgstock`) REFERENCES `orgstock` (`id`),
+  ADD CONSTRAINT `orgstock_causas_ibfk_1` FOREIGN KEY (`id_orgstock`) REFERENCES `orgstock` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `orgstock_causas_ibfk_2` FOREIGN KEY (`id_causas`) REFERENCES `causas` (`id`);
 COMMIT;
 

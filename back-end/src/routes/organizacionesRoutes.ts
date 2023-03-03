@@ -25,7 +25,7 @@ class OrganizacionesRoutes {
         this.router.post('/', uploadFotoMiddleware, validateCreate, organizacionesController.create) 
         this.router.delete('/:id', isAuthenticated, hasRole('admin'), organizacionesController.delete)
         this.router.post('/updateEstado/', isAuthenticated, hasRole('admin'), organizacionesController.update) //habilitar org
-        this.router.post('/updatemail/',validateCreateEmail, isAuthenticated, hasRole('org'), organizacionesController.updateCorreo)
+        this.router.post('/updatepass/',validateCreateEmail, isAuthenticated, hasRole('org'), organizacionesController.updatePass)
         this.router.post('/signin/', organizacionesController.logarse)
         this.router.post('/viewStock/',isAuthenticated, hasRole('org'), organizacionesController.verStock)
         this.router.get('/miinfo/', isAuthenticated, hasRole('org'), organizacionesController.miInformacion)

@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "servidor",
   "scripts": {
-    "//": "copyfiles -u 2 src/validators/*.js build/validators && copyfiles -u 2 src/middlewares/*.js build/middlewares && copyfiles -u 2 src/helpers/*.js build/helpers && npm run build && npm run dev",
+    "//": "copyfiles -u 2 src/validators/*.js build/validators ; copyfiles -u 2 src/middlewares/*.js build/middlewares ; copyfiles -u 2 src/helpers/*.js build/helpers ; npm run build ; npm run dev",
     "build": "tsc",
     "watch": "tsc -w",
 
     "//": "con esto de abajo compilamos el codigo si hay algun cambio y lo ejecutamos luego.",
     "dev": "nodemon -e ts --exec \"npm run compilar\"",
-    "copyothersfiles": "copyfiles -u 2 src/validators/*.js build/validators && copyfiles -u 2 src/middlewares/*.js build/middlewares && copyfiles -u 2 src/helpers/*.js build/helpers",
-    "compilar": "tsc && npm run copyothersfiles && npm run dev2",
+    "copyothersfiles": "copyfiles -u 2 src/validators/*.js build/validators ; copyfiles -u 2 src/middlewares/*.js build/middlewares ; copyfiles -u 2 src/helpers/*.js build/helpers",
+    "compilar": "tsc ; npm run copyothersfiles ; npm run dev2",
     "dev2": "nodemon build/index.js"
   },
   "keywords": [],

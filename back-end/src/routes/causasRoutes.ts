@@ -18,7 +18,7 @@ class CausasRoutes {
         this.router.post('/', validateCreateCausas, isAuthenticated, hasRole('admin'), causasController.create)
         this.router.post('/misdonaciones/', isAuthenticated, hasRole('admin'), causasController.getMisDonaciones)
         this.router.post('/aprobardesaprobar/', isAuthenticated, hasRole('admin'), causasController.aprove)
-      
+        this.router.post('/rechazar/', isAuthenticated, hasRole('admin'), causasController.reprove)
        
     }
 

@@ -18,6 +18,7 @@ class UsuariosRoutes {
         this.router.post('/updateEstado/', isAuthenticated, hasRole('admin'), usuariosController.update) //habilitar usuario
         this.router.post('/signin/', usuariosController.logarse)
         this.router.get('/miinfo/', isAuthenticated, usuariosController.miInformacion)
+        this.router.post('/updatepassadmin/',isAuthenticated, hasRole('admin'), usuariosController.updatePassAdmin)
     }
 
 }

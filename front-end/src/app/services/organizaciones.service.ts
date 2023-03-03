@@ -36,8 +36,8 @@ export class OrganizacionesService {
     return this.http.post(`${this.API_URI}/updateEstado/`, { id })
   }
 
-  cambiarMail(nuevo: string, id: number) {
-    return this.http.post(`${this.API_URI}/updatemail/`, { nuevo, id })
+  cambiarPass(passNuevo: string, id: number) {
+    return this.http.post(`${this.API_URI}/updatepass/`, { passNuevo, id })
   }
 
   sigIn(pass: string, mail: string) {

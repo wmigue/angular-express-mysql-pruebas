@@ -1,5 +1,9 @@
 # COMANDOS
 
+si no funciona con powershell, usar cmd 
+    npm config set script-shell cmd
+sino powershell:
+        npm config set script-shell powershell
 
 //////////////////////////////
 
