@@ -1,6 +1,6 @@
 # COMANDOS
 usar version de node  16.19.1
-instalar nvm y switchear a dicha version.
+instalar nvm y switchear a dicha version de node
 
 /////////////////////////////////////
 si no funciona con powershell, usar cmd 
