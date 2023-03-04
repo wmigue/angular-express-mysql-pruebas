@@ -1,5 +1,8 @@
 # COMANDOS
+usar version de node  16.19.1
+instalar nvm y switchear a dicha version.
 
+/////////////////////////////////////
 si no funciona con powershell, usar cmd 
     npm config set script-shell cmd
 sino powershell:
